@@ -1,4 +1,25 @@
 @import "mixins";
+@import "colors";
+
+html, body, #root, .page {
+  margin: 0;
+  padding: 0;
+  height: 1px; // to make min height actually work
+  min-height: 100%;
+}
+
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  @include tablet {
+    display: grid;
+  }
+}
 
 @import "pages/homepage";
 @import "pages/404";
+@import "pages/login";
