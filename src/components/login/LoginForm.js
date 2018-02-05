@@ -8,7 +8,7 @@ class LoginForm extends Component {
               <div id="login-body">
                 <img src={logo} id="login-logo" alt="logo" />
                 <div>
-                  <h1 id="login-heading">HowlPlay</h1>
+                  <h1 id="login-heading"><span id="login-heading-accent">Howl</span>Play</h1>
                   <h3 id="login-subheading">Login</h3>
                   <div className="login-input-section">
                       <label className="login-form-label sr-only" htmlFor="passcode-input">5 Digit Code</label>

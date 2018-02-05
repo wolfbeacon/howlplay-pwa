@@ -4,6 +4,11 @@
   align-items: center;
   background-color: #fafafa;
   padding: 20px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  animation: fade-in 0.8s ease-in-out 0s;
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 #login-body {
@@ -53,11 +58,31 @@
 
 #login-logo {
   margin-right: 10px;
+  min-width: 150px;
+  min-height: 150px;
 }
 
 #login-submit-button {
   padding: 12px 26px;
   border: none;
   color: white;
-  background: none #1976d2;
+  background: none $primary;
+  transition: background 0.2s ease-in-out 0s;
+}
+
+#login-submit-button:hover {
+  background: none #165a9e;
+}
+
+#login-submit-button:focus, #login-submit-button:active {
+  outline: none;
+}
+
+#login-heading-accent {
+  color: $primary;
+}
+
+@keyframes fade-in {
+  from {opacity: 0; top: -140px;}
+  to {opacity: 1; top: 0;}
 }

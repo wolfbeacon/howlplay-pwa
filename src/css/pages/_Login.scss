@@ -2,16 +2,15 @@
   grid-template:  "h h h" ". l ." "f f f";
   grid-template-columns: 1fr 400px 1fr;
   grid-template-rows: 1fr auto 1fr;
-  background-color: #27272a;
+  background-color: #323234;
+  min-height: 400px;
+  height: 100%;
 }
 
 #login-page-title {
   grid-area: h;
   margin: 20px 0 40px 0;
   text-align: center;
-  @include tablet {
-    margin: 40px 0 0 0;
-  }
 }
 
 #login-form {
