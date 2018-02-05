@@ -2,7 +2,7 @@
   grid-template:  "h h h" ". l ." "f f f";
   grid-template-columns: 1fr 400px 1fr;
   grid-template-rows: 1fr auto 1fr;
-  background-color: #323234;
+  background-color: $dark-gray;
   min-height: 400px;
   height: 100%;
 }
