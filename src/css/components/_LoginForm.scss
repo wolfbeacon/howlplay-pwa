@@ -1,0 +1,87 @@
+#login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fafafa;
+  padding: 20px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  animation: fade-in 0.8s ease-in-out 0s;
+  position: relative;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: 100%;
+  justify-content: center;
+  @include tablet {
+    height: auto;
+  }
+}
+
+#login-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+#login-subheading {
+  margin-bottom: 10px;
+}
+
+.login-input-section {
+  margin: 10px 0;
+}
+
+.login-form-label {
+  display: inline-block;
+  width: 100px;
+}
+
+#login-error-area {
+  display: none;
+  color: $red;
+  margin-bottom: 5px;
+}
+
+#login-error-container {
+  margin: 10px 0 5px 0;
+}
+
+.login-input {
+  padding: 8px 10px;
+  border: none;
+  transition: box-shadow 0.1s ease-in-out 0s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+.login-input:focus, .login-input:active, .login-input:hover {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  outline: none;
+}
+
+#login-logo {
+  margin-right: 10px;
+  height: 1px;
+  min-width: 100px;
+  min-height: 100px;
+}
+
+#login-submit-button {
+  padding: 12px 26px;
+  border: none;
+  color: white;
+  background: none $primary;
+  transition: background 0.2s ease-in-out 0s;
+}
+
+#login-submit-button:hover {
+  background: none $primary-dark;
+}
+
+#login-submit-button:focus, #login-submit-button:active {
+  outline: none;
+}
+@keyframes fade-in {
+  from {opacity: 0; top: -140px;}
+  to {opacity: 1; top: 0;}
+}
