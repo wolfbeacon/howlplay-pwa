@@ -13,6 +13,7 @@ class SocketApi {
         this.socket.binaryType = 'arraybuffer';
 
         this.socket.onopen = () => {
+            this.setNickname("Bobby");
             this.connected = true;
         };
 
@@ -31,12 +32,17 @@ class SocketApi {
                 case 3:
                     Driver.handlers.nicknameRejectedHandler();
                     break;
+                default:
+                    break;
             }
         };
     }
 
     setNickname(nickname) {
-        Driver.emitters.nicknameEmitter(this.socket, nickname);
+        Driver.emitters.nicknameEmitter(nickname).then((buf) => {
+            console.log(buf);
+            this.socket.send(buf)
+        });
     }
 }
 
