@@ -1,0 +1,51 @@
+#question-title {
+  margin-bottom: 26px;
+  margin-top: 10px;
+}
+
+#question-options {
+  display: flex;
+  flex-direction: column;
+  margin: -10px; // Offset margin from question-answer
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  grid-template:
+          "a b"
+          "c d"
+;
+
+  @include tablet {
+    display: grid;
+  }
+}
+
+.question-answer {
+  margin: 8px;
+  padding: 12px;
+  background: none;
+  border: 2px solid $primary;
+  color: $primary;
+  transition: all 0.2s ease-in-out 0s;
+}
+
+.question-answer:hover, .question-answer:focus, .question-answer:active {
+  background: none $primary;
+  color: white;
+  outline: none;
+}
+
+#option-0 {
+  grid-area: a;
+}
+
+#option-1 {
+  grid-area: b;
+}
+
+#option-2 {
+  grid-area: c;
+}
+
+#option-3 {
+  grid-area: d;
+}
