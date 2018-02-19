@@ -8,6 +8,7 @@ import {Router, Route, Switch} from 'react-router';
 import {routerReducer} from 'react-router-redux';
 
 import Login from "./pages/Login";
+import GamePage from './pages/GamePage';
 import NotFound from "./pages/404"
 
 import "normalize.css"
@@ -35,6 +36,7 @@ ReactDOM.render(
         <Router history={history}>
             <Switch>
                 <Route exact path="/" component={Login}/>
+                <Route exact path="/game" component={GamePage}/>
                 <Route component={NotFound}/> {/*404 Route*/}
             </Switch>
         </Router>
