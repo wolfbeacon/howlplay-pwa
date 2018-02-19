@@ -2,17 +2,31 @@ let Driver = {
     handlers: {
         /**
          * Handle ping event
-         * @param connection
-         * @param data
-         * @param storage
          */
-        pingHandler: function(connection, data, storage){
+        pingHandler: function(){
             return Promise((resolve, reject) => {
                 resolve(Driver.buildPayload(0));
             });
+        },
+        nicknameAcceptedHandler: function () {
+            return Promise((resolve, reject) => {
+                resolve(null);
+            });
+        },
+        nicknameRejectedHandler: function () {
+            return Promise((resolve, reject) => {
+                resolve(null);
+            });
         }
     },
-    emitters: {},
+    emitters: {
+        /**
+         * Sends set nickname event
+         */
+        nicknameEmitter(ws, nickname) {
+            ws.send(Driver._util.buildPayload(1, nickname));
+        }
+    },
 
     // internal utilities
     _util: {
@@ -63,8 +77,8 @@ let Driver = {
             c.set(a, 0);
             c.set(b, a.length);
             return c;
-        }
+        },
     }
 };
 
-module.exports = Driver;
+export default Driver;
