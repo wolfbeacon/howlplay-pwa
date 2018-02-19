@@ -16,6 +16,8 @@ import './css/main.scss';
 
 import './lib/socket';
 
+import socketApi from './lib/socket';
+
 // we'll worry about redux later I just set this up so that way I can set up the redux router
 const store = createStore(
     combineReducers({
@@ -25,6 +27,9 @@ const store = createStore(
 
 const history = createHistory();
 
+window.onbeforeunload = (e) => {
+    socketApi.closeSocket();
+};
 
 ReactDOM.render(
     <Provider store={store}>

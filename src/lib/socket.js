@@ -31,6 +31,12 @@ class SocketApi {
                 case 3:
                     Driver.handlers.nicknameRejectedHandler();
                     break;
+                case 5:
+                    Driver.handlers.quizAcceptedHandler();
+                    break;
+                case 6:
+                    Driver.handlers.quizRejectedHandler();
+                    break;
                 default:
                     break;
             }
@@ -38,7 +44,16 @@ class SocketApi {
     }
 
     setNickname(nickname) {
+        console.log(nickname, this.socket);
         Driver.emitters.nicknameEmitter(nickname).then((buf) => this.socket.send(buf));
+    }
+
+    checkHash(quiz) {
+        Driver.emitters.quizHashEmitter(quiz).then((buf) => this.socket.send(buf));
+    }
+
+    closeSocket() {
+        this.socket.close();
     }
 }
 
@@ -56,7 +71,15 @@ const SocketWrapper = {
     },
 
     setNickname: (...args) => {
-        SocketWrapper._validateSocket(api.setNickname, args)
+        SocketWrapper._validateSocket(api.setNickname.bind(api), ...args);
+    },
+
+    checkHash: (...args) => {
+        SocketWrapper._validateSocket(api.checkHash.bind(api), ...args);
+    },
+
+    closeSocket: (...args) => {
+        SocketWrapper._validateSocket(api.closeSocket.bind(api), ...args);
     }
 };
 
