@@ -1,18 +1,24 @@
 let Driver = {
     handlers: {
         /**
-         * Handle ping event
+         * Handles ping event
          */
         pingHandler: function(){
             return new Promise((resolve, reject) => {
                 resolve(Driver.buildPayload(0));
             });
         },
+        /**
+         * Handles nickname successfully set code from server
+         */
         nicknameAcceptedHandler: function () {
             return new Promise((resolve, reject) => {
                 resolve(null);
             });
         },
+        /**
+         * Handles nickname unsuccessfully set from game server
+         */
         nicknameRejectedHandler: function () {
             return new Promise((resolve, reject) => {
                 resolve(null);
@@ -22,7 +28,7 @@ let Driver = {
     emitters: {
         /**
          * Sends set nickname event
-         *
+         * @param payload - The desired nickname for the current user
          */
         nicknameEmitter: function (payload) {
             return new Promise((resolve, reject) => {
