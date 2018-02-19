@@ -14,6 +14,8 @@ import NotFound from "./pages/404"
 import "normalize.css"
 import './css/main.scss';
 
+import './lib/socket';
+
 // we'll worry about redux later I just set this up so that way I can set up the redux router
 const store = createStore(
     combineReducers({
