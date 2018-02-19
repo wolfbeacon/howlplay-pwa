@@ -1,10 +1,12 @@
+import md5 from "md5";
+
 let Driver = {
     handlers: {
         /**
          * Handles ping event
          */
         pingHandler: function(){
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 resolve(Driver.buildPayload(0));
             });
         },
@@ -12,7 +14,7 @@ let Driver = {
          * Handles nickname successfully set code from server
          */
         nicknameAcceptedHandler: function () {
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
                 resolve(null);
             });
         },
@@ -20,11 +22,24 @@ let Driver = {
          * Handles nickname unsuccessfully set from game server
          */
         nicknameRejectedHandler: function () {
-            return new Promise((resolve, reject) => {
+            return new Promise(resolve => {
+                resolve(null);
+            });
+        },
+
+        quizAcceptedHandler: function () {
+            return new Promise(resolve => {
+                resolve(null);
+            });
+        },
+
+        quizRejectedHandler: function () {
+            return new Promise(resolve => {
                 resolve(null);
             });
         }
     },
+
     emitters: {
         /**
          * Sends set nickname event
@@ -33,6 +48,17 @@ let Driver = {
         nicknameEmitter: function (payload) {
             return new Promise((resolve, reject) => {
                 resolve(Driver._util.buildPayload(1, payload));
+            });
+        },
+
+        /**
+         * Sends verify has event
+         * @param payload - A string representation of the quiz
+         */
+        quizHashEmitter: function (payload) {
+            let hash = md5(payload);
+            return new Promise((resolve, reject) => {
+                resolve(Driver._util.buildPayload(4, hash));
             });
         }
     },
