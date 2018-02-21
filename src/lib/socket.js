@@ -27,6 +27,7 @@ class SocketApi {
             switch (code) {
                 case 0:
                     Driver.handlers.pingHandler().then(buf => this.socket.send(buf));
+                    break;
                 case 2:
                     Driver.handlers.nicknameAcceptedHandler();
                     break;
