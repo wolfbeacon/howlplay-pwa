@@ -25,6 +25,9 @@ class SocketApi {
             let code = getCode(e.data);
             console.log(code);
             switch (code) {
+                case 0:
+                    Driver.handlers.pingHandler().then(buf => this.socket.send(buf));
+                    break;
                 case 2:
                     Driver.handlers.nicknameAcceptedHandler();
                     break;
@@ -37,19 +40,35 @@ class SocketApi {
                 case 6:
                     Driver.handlers.quizRejectedHandler();
                     break;
+                case 9:
+                    Driver.handlers.answersAcceptedHandler();
+                    break;
+                case 10:
+                    Driver.handlers.answersRejectedHandler();
+                    break;
                 default:
                     break;
             }
         };
     }
 
+
     setNickname(nickname) {
         console.log(nickname, this.socket);
         Driver.emitters.nicknameEmitter(nickname).then((buf) => this.socket.send(buf));
     }
 
+    /**
+     * Validates hash on server for quiz is same as on client
+     * @param quiz string representation of the quiz
+     */
     checkHash(quiz) {
         Driver.emitters.quizHashEmitter(quiz).then((buf) => this.socket.send(buf));
+    }
+
+    sendAnswers(index, answers) {
+        let payload = [index, ...answers];
+        Driver.emitters.answersEmitter(payload).then((buf) => this.socket.send(buf));
     }
 
     closeSocket() {
@@ -76,6 +95,10 @@ const SocketWrapper = {
 
     checkHash: (...args) => {
         SocketWrapper._validateSocket(api.checkHash.bind(api), ...args);
+    },
+
+    sendAnswers: (...args) => {
+        SocketWrapper._validateSocket(api.sendAnswers.bind(api), ...args);
     },
 
     closeSocket: (...args) => {
