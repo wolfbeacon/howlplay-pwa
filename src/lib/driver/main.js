@@ -5,9 +5,9 @@ let Driver = {
         /**
          * Handles ping event
          */
-        pingHandler: function(){
+        pingHandler: function() {
             return new Promise(resolve => {
-                resolve(Driver.buildPayload(0));
+                resolve(Driver._util.buildPayload(0));
             });
         },
         /**
@@ -37,6 +37,18 @@ let Driver = {
             return new Promise(resolve => {
                 resolve(null);
             });
+        },
+
+        answersAcceptedHandler: function () {
+            return new Promise(resolve => {
+                resolve(null);
+            });
+        },
+
+        answersRejectedHandler: function () {
+            return new Promise(resolve => {
+                resolve(null);
+            });
         }
     },
 
@@ -46,9 +58,7 @@ let Driver = {
          * @param payload - The desired nickname for the current user
          */
         nicknameEmitter: function (payload) {
-            return new Promise((resolve, reject) => {
-                resolve(Driver._util.buildPayload(1, payload));
-            });
+            return new Promise(resolve => resolve(Driver._util.buildPayload(1, payload)));
         },
 
         /**
@@ -57,9 +67,13 @@ let Driver = {
          */
         quizHashEmitter: function (payload) {
             let hash = md5(payload);
-            return new Promise((resolve, reject) => {
-                resolve(Driver._util.buildPayload(4, hash));
-            });
+            return new Promise(resolve => resolve(Driver._util.buildPayload(4, hash)));
+        },
+
+        answersEmitter: function (payload) {
+            let fullPayload = Driver._util.concatTypedArrays(new Uint8Array([7]), new Uint8Array(payload));
+            console.log(fullPayload);
+            return new Promise(resolve => resolve(fullPayload.buffer));
         }
     },
 

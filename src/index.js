@@ -28,7 +28,11 @@ const store = createStore(
 const history = createHistory();
 
 window.onbeforeunload = (e) => {
-    socketApi.closeSocket();
+    try {
+        socketApi.closeSocket();
+    } catch (err) {
+        console.log(err.toString());
+    }
 };
 
 ReactDOM.render(
