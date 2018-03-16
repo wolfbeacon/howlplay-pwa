@@ -4,8 +4,9 @@ import registerServiceWorker from './registerServiceWorker';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
-import {Router, Route, Switch} from 'react-router';
+import {Route, Switch} from 'react-router';
 import {routerReducer} from 'react-router-redux';
+import {BrowserRouter} from "react-router-dom";
 
 import Login from "./pages/Login";
 import GamePage from './pages/GamePage';
@@ -37,12 +38,12 @@ window.onbeforeunload = (e) => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={history}>
+        <BrowserRouter history={history}>
             <Switch>
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/game" component={GamePage}/>
                 <Route component={NotFound}/> {/*404 Route*/}
             </Switch>
-        </Router>
+        </BrowserRouter>
     </Provider> , document.getElementById('root'));
 registerServiceWorker();
