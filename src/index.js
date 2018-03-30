@@ -17,12 +17,15 @@ import './css/main.scss';
 
 import './lib/socket';
 
+import howlPlayApp from './reducers';
+
 import socketApi from './lib/socket';
 
 // we'll worry about redux later I just set this up so that way I can set up the redux router
 const store = createStore(
     combineReducers({
-        routing: routerReducer
+        routing: routerReducer,
+        howlPlayApp
     })
 );
 
