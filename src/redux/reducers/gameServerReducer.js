@@ -1,10 +1,14 @@
-import {GAME_SERVER_INPUT_ERROR, SET_GAME_SERVER} from "../actions/gameServerActions";
+import {SET_QUIZ_DATA, GAME_SERVER_INPUT_ERROR, SET_GAME_SERVER} from "../actions/gameServerActions";
+
+import axios from 'axios';
 
 const initialState = {
     gameServerLink: "",
     nickname: "",
-    error: null
+    error: null,
+    quizData: null
 };
+
 
 function gameServerReducer(state = initialState, action){
 
@@ -13,8 +17,9 @@ function gameServerReducer(state = initialState, action){
             return {...state, gameServerLink: action.payload.link,
                 nickname: action.payload.nickname};
         case GAME_SERVER_INPUT_ERROR:
-            console.log(action.error);
             return {...state, error: action.error};
+        case SET_QUIZ_DATA:
+            return { ...state, quizData: action.payload.quizData };
         default:
             return state;
     }
