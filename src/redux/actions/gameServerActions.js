@@ -16,7 +16,6 @@ export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
  * @private
  */
 function _checkAllInput(code, nickname) {
-    console.log(code);
     // code must be X6Y7Z format
     if (!code.toUpperCase().match(/^[A-Z0-9]{5}$/)) {
         return "Invalid server code"
@@ -34,7 +33,6 @@ function _checkAllInput(code, nickname) {
 export function checkAndSwitchToGamePage({code, nickname}) {
     return (dispatch) => {
         let error =_checkAllInput(code, nickname);
-        console.log(code, nickname, error);
         if (error) {
             dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
         } else {
