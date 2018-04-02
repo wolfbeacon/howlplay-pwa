@@ -11,11 +11,13 @@ function webSocketReducer(state = initialState, action){
             if (state) {
                 try {
                     state.closeSocket();
+                    return null;
                 } catch (err) {
                     console.log(err.toString());
+                    return state;
                 }
             }
-            return null;
+            return state;
         default:
             return state;
     }
