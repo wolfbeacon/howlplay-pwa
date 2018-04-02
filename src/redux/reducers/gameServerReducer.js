@@ -1,7 +1,5 @@
 import {SET_QUIZ_DATA, GAME_SERVER_INPUT_ERROR, SET_GAME_SERVER} from "../actions/gameServerActions";
 
-import axios from 'axios';
-
 const initialState = {
     gameServerLink: "",
     nickname: "",
