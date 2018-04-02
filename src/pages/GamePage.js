@@ -4,13 +4,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {getQuizData} from "../redux/actions/gameServerActions";
 import {push} from "react-router-redux";
-
 import {setCurrentQuestionIndex} from "../redux/actions/gameActions";
 
 
 class GamePage extends Component {
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getQuizData();
         if (!this.props.gameServerLink) {
             this.props.push('/');
