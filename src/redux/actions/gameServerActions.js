@@ -1,7 +1,10 @@
 import {push} from 'react-router-redux';
+import axios from "axios/index";
+import {initializeSocket} from "./webSocketActions";
 
 
 const DEFAULT_GAME_SERVER = "ws://localhost:1234";
+const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/d0e4bd76c3fd61dcb5690e6493e1e167b7790e9f/quiz.json';
 
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
@@ -46,12 +49,14 @@ export function checkAndSwitchToGamePage({code, nickname}) {
 
 }
 
-
-export function setQuizData(quizData){
-    return (dispatch) => {
-        dispatch({
-            type: SET_QUIZ_DATA,
-            payload: { quizData }
+export function getQuizData() {
+    return dispatch => {
+        axios.get(QUIZ_LINK).then((data) => {
+            dispatch ({
+                type: SET_QUIZ_DATA,
+                payload: data
+            });
+            dispatch(initializeSocket());
         });
     }
 }

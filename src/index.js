@@ -18,24 +18,26 @@ import './css/main.scss';
 import './lib/socket';
 
 import gameServerReducer from './redux/reducers/gameServerReducer';
-
-import socketApi from './lib/socket';
+import webSocketReducer from "./redux/reducers/webSocketReducer";
 
 const history = createHistory();
 
 export const store = createStore(
     combineReducers({
         routing: routerReducer,
-        gameServer: gameServerReducer
+        gameServer: gameServerReducer,
+        socket: webSocketReducer
     }), applyMiddleware(thunk, routerMiddleware(history))
 );
 
 
 window.onbeforeunload = (e) => {
-    try {
-        socketApi.closeSocket();
-    } catch (err) {
-        console.log(err.toString());
+    if (store.gameServer.socket) {
+        try {
+            store.gameServer.socket.closeSocket();
+        } catch (err) {
+            console.log(err.toString());
+        }
     }
 };
 

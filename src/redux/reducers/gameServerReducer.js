@@ -17,7 +17,8 @@ function gameServerReducer(state = initialState, action){
         case GAME_SERVER_INPUT_ERROR:
             return {...state, error: action.error};
         case SET_QUIZ_DATA:
-            return { ...state, quizData: action.payload.quizData };
+            console.log(action.payload);
+            return { ...state, quizData: action.payload.data };
         default:
             return state;
     }
