@@ -6,10 +6,10 @@ function getCode (buf) {
 }
 
 class SocketApi {
-    constructor() {
+    constructor(url) {
         this.connected = false;
         this.error = false;
-        this.socket = new WebSocket('ws://localhost:9090');
+        this.socket = new WebSocket(url);
         this.socket.binaryType = 'arraybuffer';
 
         this.socket.onopen = () => {
@@ -76,34 +76,42 @@ class SocketApi {
     }
 }
 
-const api = new SocketApi();
+let api = null;
 
 
-// a wrapper around the socket api to allow for the application of middleware
-const SocketWrapper = {
-    _validateSocket: (next, ...args) => {
-        if (api.connected && api.error === false) {
+class SocketWrapper {
+    constructor(url) {
+        // To prevent there from being more than one socket intialized at a time
+        if (!api) {
+            console.log("Opening Connection to", url);
+            api = new SocketApi(url);
+        }
+    }
+
+    _validateSocket(next, ...args) {
+        if (api && api.connected && api.error === false) {
             return next(...args);
         } else {
-            throw new Error("Could not talk to socket at the moment");
+            throw new Error("Socket is not open, or not connected!");
         }
-    },
-
-    setNickname: (...args) => {
-        SocketWrapper._validateSocket(api.setNickname.bind(api), ...args);
-    },
-
-    checkHash: (...args) => {
-        SocketWrapper._validateSocket(api.checkHash.bind(api), ...args);
-    },
-
-    sendAnswers: (...args) => {
-        SocketWrapper._validateSocket(api.sendAnswers.bind(api), ...args);
-    },
-
-    closeSocket: (...args) => {
-        SocketWrapper._validateSocket(api.closeSocket.bind(api), ...args);
     }
-};
+
+    setNickname(...args) {
+        SocketWrapper._validateSocket(api.setNickname.bind(api), ...args);
+    }
+
+    checkHash (...args) {
+        SocketWrapper._validateSocket(api.checkHash.bind(api), ...args);
+    }
+
+    sendAnswers (...args) {
+        SocketWrapper._validateSocket(api.sendAnswers.bind(api), ...args);
+    }
+
+    closeSocket (...args) {
+        SocketWrapper._validateSocket(api.closeSocket.bind(api), ...args);
+        api = null;
+    }
+}
 
 export default SocketWrapper;

@@ -2,19 +2,14 @@ import React, {Component} from 'react'
 import Question from '../components/gamepage/Question'
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
-import {setQuizData} from "../redux/actions/gameServerActions";
-import axios from "axios/index";
+import {getQuizData} from "../redux/actions/gameServerActions";
 
-const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/d0e4bd76c3fd61dcb5690e6493e1e167b7790e9f/quiz.json';
 
 
 class GamePage extends Component {
 
     componentDidMount(){
-
-        axios.get(QUIZ_LINK).then((data) => {
-            this.props.setQuizData(data.data);
-        });
+        this.props.getQuizData();
     }
 
     render() {
@@ -39,6 +34,6 @@ const mapStateToProps = state => {
     quizData: state.gameServer.quizData}
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({setQuizData}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({getQuizData}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage);
