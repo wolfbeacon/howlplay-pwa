@@ -38,14 +38,13 @@ class GamePage extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state => ({
     gameServerLink: state.gameServer.link,
     nickname: state.gameServer.nickname,
     quizData: state.gameServer.quizData,
     currentQuestionIndex: state.game.currentQuestionIndex,
     socket: state.socket !== null
-
-};
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, push}, dispatch);
 
