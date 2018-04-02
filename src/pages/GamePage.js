@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import Question from '../components/gamepage/Question'
+import {connect} from 'react-redux';
+
 
 class GamePage extends Component {
 
@@ -19,10 +21,19 @@ class GamePage extends Component {
                 <div id="question-box">
                     <Question build={inputs}/>
                     <p id="question-left"><span id="question-left-count">5</span> questions left</p>
+                    <p>Connected to server: { this.props.gameServerLink }</p>
+                    <p>Using nickname: { this.props.nickname }</p>
                 </div>
             </section>
         );
     }
 }
 
-export default GamePage;
+const mapStateToProps = state => {
+    return {
+        gameServerLink: state.gameServer.link,
+        nickname: state.gameServer.nickname
+    }
+};
+
+export default connect(mapStateToProps)(GamePage);

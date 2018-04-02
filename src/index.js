@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
-import {createStore, combineReducers} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import createHistory from 'history/createBrowserHistory';
 import {Route, Switch} from 'react-router';
-import {routerReducer} from 'react-router-redux';
-import {BrowserRouter} from "react-router-dom";
+import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux';
+import thunk from 'redux-thunk';
 
 import Login from "./pages/Login";
 import GamePage from './pages/GamePage';
@@ -17,16 +17,19 @@ import './css/main.scss';
 
 import './lib/socket';
 
+import gameServerReducer from './redux/reducers/gameServerReducer';
+
 import socketApi from './lib/socket';
 
-// we'll worry about redux later I just set this up so that way I can set up the redux router
-const store = createStore(
+const history = createHistory();
+
+export const store = createStore(
     combineReducers({
-        routing: routerReducer
-    })
+        routing: routerReducer,
+        gameServer: gameServerReducer
+    }), applyMiddleware(thunk, routerMiddleware(history))
 );
 
-const history = createHistory();
 
 window.onbeforeunload = (e) => {
     try {
@@ -38,12 +41,12 @@ window.onbeforeunload = (e) => {
 
 ReactDOM.render(
     <Provider store={store}>
-        <BrowserRouter history={history}>
+        <ConnectedRouter history={history}>
             <Switch>
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/game" component={GamePage}/>
                 <Route component={NotFound}/> {/*404 Route*/}
             </Switch>
-        </BrowserRouter>
+        </ConnectedRouter>
     </Provider> , document.getElementById('root'));
 registerServiceWorker();
