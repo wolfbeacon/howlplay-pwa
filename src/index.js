@@ -19,6 +19,7 @@ import './lib/socket';
 
 import gameServerReducer from './redux/reducers/gameServerReducer';
 import webSocketReducer from "./redux/reducers/webSocketReducer";
+import gameReducer from "./redux/reducers/gameReducer";
 
 const history = createHistory();
 
@@ -26,7 +27,8 @@ export const store = createStore(
     combineReducers({
         routing: routerReducer,
         gameServer: gameServerReducer,
-        socket: webSocketReducer
+        socket: webSocketReducer,
+        game: gameReducer
     }), applyMiddleware(thunk, routerMiddleware(history))
 );
 
