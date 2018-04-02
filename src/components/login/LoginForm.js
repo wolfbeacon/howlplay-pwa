@@ -4,12 +4,8 @@ import logo from '../../logo.svg';
 import StyledTitle from "../StyledTitle";
 import {connect} from 'react-redux';
 
-import {
-    setGameServer
-} from '../../actions'
-
-
-const DEFAULT_GAME_SERVER = "ws://localhost:1234";
+import {bindActionCreators} from "redux";
+import {checkAndSwitchToGamePage} from "../../redux/actions/gameServerActions";
 
 class LoginForm extends Component {
 
@@ -22,8 +18,6 @@ class LoginForm extends Component {
         this.state = {
             code: "",
             nickname: "",
-            hasError: false,
-            error: ""
         }
     }
 
@@ -38,48 +32,12 @@ class LoginForm extends Component {
         });
     }
 
-
-    /**
-     * Check all input, if any input is invalid, hasError will be set to true with an error message
-     * @returns {boolean}
-     * @private
-     */
-    _checkAllInput() {
-        // code must be X6Y7Z format
-        if (!this.state.code.toUpperCase().match(/^[A-Z0-9]{5}$/)) {
-            this.setState({
-                hasError: true,
-                error: "Invalid server code"
-            });
-            return false;
-            // nickname cannot contain special characters, and must be 1-256 characters long.
-        } else if (!this.state.nickname.match(/^[a-zA-Z0-9]{1,256}$/)) {
-            this.setState({
-                hasError: true,
-                error: "Invalid nickname"
-            });
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Check all input, if all valid, switch to /game
-     * Also update redux store
-     */
-    checkAndSwitchToGamePage() {
-        this.setState({hasError: false});
-        if (this._checkAllInput()) {
-            this.props.dispatch(setGameServer(DEFAULT_GAME_SERVER, this.state.nickname));
-            this.props.history.push('/game')
-        }
-    }
-
     /**
      * Default React.js render handler
      * @returns {*}
      */
     render() {
+        console.log("render", this.props.error);
         return (
             <form id="login-form">
                 <div id="login-body">
@@ -100,9 +58,9 @@ class LoginForm extends Component {
                     </div>
                 </div>
                 <div id="login-error-container">
-                    {this.state.hasError ? <p id="login-error-area">{this.state.error}</p> : null}
+                    {this.props.error ? <p id="login-error-area">{this.props.error}</p> : null}
                     <button type="button" id="login-submit-button"
-                            onClick={() => this.checkAndSwitchToGamePage()}>Login
+                            onClick={() => {this.props.checkAndSwitchToGamePage(this.state)}}>Login
                     </button>
                 </div>
             </form>
@@ -110,5 +68,8 @@ class LoginForm extends Component {
     }
 }
 
+const mapStateToProps = state => ({error: state.gameServer.error});
 
-export default connect()(withRouter(LoginForm))
+const mapDispatchToProps = dispatch => bindActionCreators({checkAndSwitchToGamePage}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(LoginForm))

@@ -31,8 +31,8 @@ class GamePage extends Component {
 
 const mapStateToProps = state => {
     return {
-        gameServerLink: state.howlPlayApp.gameServerLink,
-        nickname: state.howlPlayApp.nickname
+        gameServerLink: state.gameServer.link,
+        nickname: state.gameServer.nickname
     }
 };
 
