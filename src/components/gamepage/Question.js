@@ -3,8 +3,8 @@ import React, {Component} from 'react'
 class Question extends Component {
     render() {
         const listQuestions = this.props.build.choices.map((item, key) => {
-            var id="option-" + key;
-            return (<button className="question-answer" id={id} key={key}>{item}</button>)
+            let id="option-" + key;
+            return (<button className="question-answer" onClick={() => this.props.onSubmitAnswer(key)} id={id} key={key}>{item}</button>)
         });
         return(
             <div id="question-area">
@@ -17,4 +17,7 @@ class Question extends Component {
     }
 }
 
+
+
 export default Question;
+
