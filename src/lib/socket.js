@@ -1,4 +1,6 @@
 import Driver from "./driver/main";
+import {store} from "../index";
+import {push} from "react-router-redux";
 
 function getCode (buf) {
     let dataView = new Uint8Array(buf);
@@ -50,6 +52,11 @@ class SocketApi {
                     break;
             }
         };
+
+        this.socket.onclose = (e) => {
+            store.dispatch(push('/'));
+            api = null;
+        }
     }
 
 
@@ -97,20 +104,19 @@ class SocketWrapper {
     }
 
     setNickname(...args) {
-        SocketWrapper._validateSocket(api.setNickname.bind(api), ...args);
+        this._validateSocket(api.setNickname.bind(api), ...args);
     }
 
     checkHash (...args) {
-        SocketWrapper._validateSocket(api.checkHash.bind(api), ...args);
+        this._validateSocket(api.checkHash.bind(api), ...args);
     }
 
     sendAnswers (...args) {
-        SocketWrapper._validateSocket(api.sendAnswers.bind(api), ...args);
+        this._validateSocket(api.sendAnswers.bind(api), ...args);
     }
 
     closeSocket (...args) {
-        SocketWrapper._validateSocket(api.closeSocket.bind(api), ...args);
-        api = null;
+        this._validateSocket(api.closeSocket.bind(api), ...args);
     }
 }
 

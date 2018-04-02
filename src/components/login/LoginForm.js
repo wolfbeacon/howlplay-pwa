@@ -37,7 +37,6 @@ class LoginForm extends Component {
      * @returns {*}
      */
     render() {
-        console.log("render", this.props.error);
         return (
             <form id="login-form">
                 <div id="login-body">
