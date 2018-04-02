@@ -18,6 +18,7 @@ function webSocketReducer(state = initialState, action){
                     return state;
                 }
             }
+            return state;
         default:
             return state;
     }
