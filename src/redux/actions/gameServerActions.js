@@ -5,6 +5,8 @@ const DEFAULT_GAME_SERVER = "ws://localhost:1234";
 
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
+export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
+
 /**
  * Check all input, if any input is invalid, hasError will be set to true with an error message
  * @returns {boolean}
@@ -42,4 +44,14 @@ export function checkAndSwitchToGamePage({code, nickname}) {
         }
     }
 
+}
+
+
+export function setQuizData(quizData){
+    return (dispatch) => {
+        dispatch({
+            type: SET_QUIZ_DATA,
+            payload: { quizData }
+        });
+    }
 }
