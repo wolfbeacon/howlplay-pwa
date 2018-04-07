@@ -4,7 +4,7 @@ import {initializeSocket} from "./webSocketActions";
 
 
 const DEFAULT_GAME_SERVER = "ws://localhost:1234";
-const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/d0e4bd76c3fd61dcb5690e6493e1e167b7790e9f/quiz.json';
+const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
 
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
