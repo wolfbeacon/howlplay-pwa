@@ -28,11 +28,11 @@
   transition: all 0.2s ease-in-out 0s;
 }
 
-.question-answer:hover, .question-answer:focus, .question-answer:active {
-  background: none $primary;
-  color: white;
-  outline: none;
-}
+//.question-answer:hover, .question-answer:focus, .question-answer:active {
+//  background: none $primary;
+//  color: white;
+//  outline: none;
+//}
 
 #option-0 {
   grid-area: a;

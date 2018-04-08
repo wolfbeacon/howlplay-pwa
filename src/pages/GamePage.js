@@ -9,6 +9,15 @@ import {setCurrentQuestionIndex} from "../redux/actions/gameActions";
 
 class GamePage extends Component {
 
+    constructor(props){
+        super(props);
+
+        this.state = {
+            score: 0,
+            finished: false
+        }
+    }
+
     componentDidMount() {
         this.props.getQuizData();
         if (!this.props.gameServerLink) {
@@ -19,17 +28,27 @@ class GamePage extends Component {
     render() {
         if (this.props.quizData) {
             return <section id="gamepage">
-                <div id="question-box">
+                {!this.state.finished ? <div id="question-box">
                     <Question build={this.props.quizData[this.props.currentQuestionIndex]}
-                              onSubmitAnswer={() => {
-                                  if(this.props.currentQuestionIndex < this.props.quizData.length - 1) {
+                              onSubmitAnswer={(isCorrect) => {
+                                  if (this.props.currentQuestionIndex < this.props.quizData.length - 1) {
                                       this.props.setCurrentQuestionIndex(this.props.currentQuestionIndex + 1)
+                                  } else {
+                                      this.setState({ finished: true });
                                   }
+                                  if (isCorrect) this.setState({score: this.state.score + 1})
                               }}/>
-                    <p id="question-left"><span id="question-left-count">{ this.props.quizData.length - this.props.currentQuestionIndex }</span> questions left</p>
+                    <p id="question-left"><span
+                        id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex}</span> questions
+                        left</p>
                     <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
                     <p>Using nickname: {this.props.nickname}</p>
+                </div> :
+                <div className="score-display">
+                    <h1>Your final score is:</h1>
+                    <span>{this.state.score} / {this.props.quizData.length}</span>
                 </div>
+                }
             </section>
         } else {
             return <p>Loading ...</p>
