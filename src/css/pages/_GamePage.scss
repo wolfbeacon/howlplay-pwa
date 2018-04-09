@@ -14,11 +14,13 @@
   grid-area: box;
   max-width: 600px;
   padding: 30px 40px;
-  background-color: $off-white;
   color: black;
   animation: fade-in 0.6s ease-in-out 0s;
   position: relative;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  @include tablet {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    background-color: $off-white;
+  }
 }
 
 #question-left {
