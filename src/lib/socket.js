@@ -8,14 +8,19 @@ function getCode (buf) {
 }
 
 class SocketApi {
-    constructor(url) {
+    constructor(url, config) {
         this.connected = false;
         this.error = false;
         this.socket = new WebSocket(url);
         this.socket.binaryType = 'arraybuffer';
+        this.config = config;
+        this.nicknameSet = false;
+
 
         this.socket.onopen = () => {
             this.connected = true;
+            // We can now set the nickname
+            this.setNickname(this.config.nickname);
         };
 
         this.socket.onerror = (err) => {
@@ -31,9 +36,11 @@ class SocketApi {
                     Driver.handlers.pingHandler().then(buf => this.socket.send(buf));
                     break;
                 case 2:
+                    this.nicknameSet = true;
                     Driver.handlers.nicknameAcceptedHandler();
                     break;
                 case 3:
+                    this.closeSocket();
                     Driver.handlers.nicknameRejectedHandler();
                     break;
                 case 5:
@@ -61,7 +68,6 @@ class SocketApi {
 
 
     setNickname(nickname) {
-        console.log(nickname, this.socket);
         Driver.emitters.nicknameEmitter(nickname).then((buf) => this.socket.send(buf));
     }
 
@@ -87,12 +93,13 @@ let api = null;
 
 
 class SocketWrapper {
-    constructor(url) {
+    constructor(url, config) {
         // To prevent there from being more than one socket intialized at a time
         if (!api) {
             console.log("Opening Connection to", url);
-            api = new SocketApi(url);
+            api = new SocketApi(url, config);
         }
+        this.api = api;
     }
 
     _validateSocket(next, ...args) {

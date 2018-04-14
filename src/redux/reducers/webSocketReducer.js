@@ -1,4 +1,4 @@
-import {SOCKET_CLOSED, SOCKET_CONNECTED} from "../actions/webSocketActions";
+import {SEND_NICKNAME, SOCKET_CLOSED, SOCKET_CONNECTED} from "../actions/webSocketActions";
 import Socket from "../../lib/socket";
 
 const initialState = null;
@@ -6,7 +6,7 @@ const initialState = null;
 function webSocketReducer(state = initialState, action){
     switch (action.type) {
         case SOCKET_CONNECTED:
-            return new Socket("ws://demo-game-server.howlplay.com:9090");
+            return new Socket(action.payload.url, action.payload.config);
         case SOCKET_CLOSED:
             if (state) {
                 try {
@@ -16,6 +16,11 @@ function webSocketReducer(state = initialState, action){
                     console.log(err.toString());
                     return state;
                 }
+            }
+            return state;
+        case SEND_NICKNAME:
+            if(state){
+                state.setNickname(action.payload);
             }
             return state;
         default:

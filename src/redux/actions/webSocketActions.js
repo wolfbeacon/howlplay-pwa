@@ -1,12 +1,17 @@
 export const SOCKET_CONNECTED = "SOCKET_CONNECTED";
 export const SOCKET_CLOSED = "SOCKET_CLOSED";
+export const SEND_NICKNAME = "SEND_NICKNAME";
 
-export function initializeSocket(url) {
-    return {
+
+export const initializeSocket = (url, config) => (dispatch) => {
+    dispatch({
         type: SOCKET_CONNECTED,
-        payload: url
-    }
-}
+        payload: {
+            url, config
+        }
+    })
+};
+
 
 export function closeSocket() {
     return {
