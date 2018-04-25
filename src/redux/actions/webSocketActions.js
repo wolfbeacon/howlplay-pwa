@@ -1,6 +1,7 @@
 export const SOCKET_CONNECTED = "SOCKET_CONNECTED";
 export const SOCKET_CLOSED = "SOCKET_CLOSED";
 export const SEND_NICKNAME = "SEND_NICKNAME";
+export const QUEUE_ANSWER = "QUEUE_ANSWER";
 
 
 export const initializeSocket = (url, config) => (dispatch) => {
@@ -12,6 +13,13 @@ export const initializeSocket = (url, config) => (dispatch) => {
     })
 };
 
+
+export function queueAnswer(answer){
+    return {
+        type: QUEUE_ANSWER,
+        payload: answer
+    }
+}
 
 export function closeSocket() {
     return {
