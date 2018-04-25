@@ -15,6 +15,7 @@ class SocketApi {
         this.socket.binaryType = 'arraybuffer';
         this.config = config;
         this.nicknameSet = false;
+        this.answerQueue = [];
 
 
         this.socket.onopen = () => {
@@ -87,6 +88,11 @@ class SocketApi {
     closeSocket() {
         this.socket.close();
     }
+
+    queueAnswer(answer){
+        this.answerQueue.push(answer);
+        console.log("Answer queue", this.answerQueue);
+    }
 }
 
 let api = null;
@@ -108,6 +114,10 @@ class SocketWrapper {
         } else {
             throw new Error("Socket is not open, or not connected!");
         }
+    }
+
+    queueAnswer(...args){
+        this._validateSocket(api.queueAnswer.bind(api), ...args);
     }
 
     setNickname(...args) {
