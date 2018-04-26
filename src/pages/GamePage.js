@@ -5,6 +5,7 @@ import {bindActionCreators} from "redux";
 import {getQuizData} from "../redux/actions/gameServerActions";
 import {push} from "react-router-redux";
 import {setCurrentQuestionIndex} from "../redux/actions/gameActions";
+import {submitAnswers} from "../redux/actions/webSocketActions";
 
 class GamePage extends Component {
 
@@ -14,7 +15,9 @@ class GamePage extends Component {
         this.state = {
             score: 0,
             finished: false
-        }
+        };
+
+        this.submitAnswersTimer = null;
     }
 
     componentDidMount() {
@@ -24,7 +27,19 @@ class GamePage extends Component {
         if (!this.props.gameServerLink) {
             this.props.push('/');
         }
+
+        // Set a interval for submit answers, right now 200 mil secs
+        this.submitAnswersTimer = setInterval(this.onSubmitAnswers, 200);
     }
+
+
+    componentWillUnmount() {
+        clearInterval(this.submitAnswersTimer);
+    }
+
+    onSubmitAnswers = () => {
+        this.props.submitAnswers();
+    };
 
     render() {
         if (this.props.quizData && this.props.socket) {
@@ -65,6 +80,6 @@ const mapStateToProps = state => ({
     socket: state.socket
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, push}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, submitAnswers, push}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage);

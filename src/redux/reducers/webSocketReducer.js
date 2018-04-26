@@ -1,4 +1,10 @@
-import {QUEUE_ANSWER, SEND_NICKNAME, SOCKET_CLOSED, SOCKET_CONNECTED} from "../actions/webSocketActions";
+import {
+    QUEUE_ANSWER,
+    SEND_NICKNAME,
+    SOCKET_CLOSED,
+    SOCKET_CONNECTED,
+    SUBMIT_ANSWERS
+} from "../actions/webSocketActions";
 import Socket from "../../lib/socket";
 
 const initialState = null;
@@ -26,6 +32,11 @@ function webSocketReducer(state = initialState, action){
         case QUEUE_ANSWER:
             if(state){
                 state.queueAnswer(action.payload);
+            }
+            return state;
+        case SUBMIT_ANSWERS:
+            if(state){
+                state.submitAnswers();
             }
             return state;
         default:

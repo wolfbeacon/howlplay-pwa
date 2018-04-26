@@ -16,6 +16,8 @@ class SocketApi {
         this.config = config;
         this.nicknameSet = false;
         this.answerQueue = [];
+        this.currentQueueIndex = 0;
+        this.lastAnswerSubmissionDone = true;
 
 
         this.socket.onopen = () => {
@@ -134,6 +136,19 @@ class SocketWrapper {
 
     closeSocket (...args) {
         this._validateSocket(api.closeSocket.bind(api), ...args);
+    }
+
+    submitAnswers(){
+        if(!this.api.lastAnswerSubmissionDone){
+            console.log("Still waiting for last submission...");
+            return;
+        }
+        if(this.api.answerQueue.length === 0){
+            console.log("No answers to submit... queue empty");
+            return;
+        }
+        this.api.answerQueue.lastAnswerSubmissionDone = false;
+        this.api.sendAnswers(this.api.currentQueueIndex, this.api.answerQueue);
     }
 }
 
