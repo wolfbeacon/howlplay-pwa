@@ -41,6 +41,8 @@ class SocketApi {
                 case 2:
                     this.nicknameSet = true;
                     Driver.handlers.nicknameAcceptedHandler();
+                    // Emit hash check
+                    this.checkHash("abc");
                     break;
                 case 3:
                     this.closeSocket();
