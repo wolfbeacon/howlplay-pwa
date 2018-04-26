@@ -16,6 +16,8 @@ class SocketApi {
         this.config = config;
         this.nicknameSet = false;
         this.answerQueue = [];
+        this.currentQueueIndex = 0;
+        this.lastAnswerSubmissionDone = true;
 
 
         this.socket.onopen = () => {
@@ -39,6 +41,8 @@ class SocketApi {
                 case 2:
                     this.nicknameSet = true;
                     Driver.handlers.nicknameAcceptedHandler();
+                    // Emit hash check
+                    this.checkHash("abc");
                     break;
                 case 3:
                     this.closeSocket();
@@ -52,9 +56,13 @@ class SocketApi {
                     break;
                 case 9:
                     Driver.handlers.answersAcceptedHandler();
+                    this.lastAnswerSubmissionDone = true;
+                    this.currentQueueIndex += this.answerQueue.length;
+                    this.answerQueue = [];
                     break;
                 case 10:
                     Driver.handlers.answersRejectedHandler();
+                    this.lastAnswerSubmissionDone = true;
                     break;
                 default:
                     break;
@@ -134,6 +142,19 @@ class SocketWrapper {
 
     closeSocket (...args) {
         this._validateSocket(api.closeSocket.bind(api), ...args);
+    }
+
+    submitAnswers(){
+        if(!this.api.lastAnswerSubmissionDone){
+            console.log("Still waiting for last submission...");
+            return;
+        }
+        if(this.api.answerQueue.length === 0){
+            console.log("No answers to submit... queue empty");
+            return;
+        }
+        this.api.answerQueue.lastAnswerSubmissionDone = false;
+        this.api.sendAnswers(this.api.currentQueueIndex, this.api.answerQueue);
     }
 }
 
