@@ -56,9 +56,13 @@ class SocketApi {
                     break;
                 case 9:
                     Driver.handlers.answersAcceptedHandler();
+                    this.lastAnswerSubmissionDone = true;
+                    this.currentQueueIndex += this.answerQueue.length;
+                    this.answerQueue = [];
                     break;
                 case 10:
                     Driver.handlers.answersRejectedHandler();
+                    this.lastAnswerSubmissionDone = true;
                     break;
                 default:
                     break;

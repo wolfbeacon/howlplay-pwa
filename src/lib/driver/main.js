@@ -30,7 +30,7 @@ let Driver = {
         },
 
         quizAcceptedHandler: function () {
-            console.log("Nickname accepted");
+            console.log("Quiz accepted");
             return new Promise(resolve => {
                 resolve(null);
             });
@@ -43,12 +43,14 @@ let Driver = {
         },
 
         answersAcceptedHandler: function () {
+            console.log("Answers accepted");
             return new Promise(resolve => {
                 resolve(null);
             });
         },
 
         answersRejectedHandler: function () {
+            console.log("Answers rejected");
             return new Promise(resolve => {
                 resolve(null);
             });
