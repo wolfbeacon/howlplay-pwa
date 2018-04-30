@@ -8,14 +8,22 @@ function getCode (buf) {
 }
 
 class SocketApi {
-    constructor(url) {
+    constructor(url, config) {
         this.connected = false;
         this.error = false;
         this.socket = new WebSocket(url);
         this.socket.binaryType = 'arraybuffer';
+        this.config = config;
+        this.nicknameSet = false;
+        this.answerQueue = [];
+        this.currentQueueIndex = 0;
+        this.lastAnswerSubmissionDone = true;
+
 
         this.socket.onopen = () => {
             this.connected = true;
+            // We can now set the nickname
+            this.setNickname(this.config.nickname);
         };
 
         this.socket.onerror = (err) => {
@@ -31,9 +39,13 @@ class SocketApi {
                     Driver.handlers.pingHandler().then(buf => this.socket.send(buf));
                     break;
                 case 2:
+                    this.nicknameSet = true;
                     Driver.handlers.nicknameAcceptedHandler();
+                    // Emit hash check
+                    this.checkHash("abc");
                     break;
                 case 3:
+                    this.closeSocket();
                     Driver.handlers.nicknameRejectedHandler();
                     break;
                 case 5:
@@ -44,9 +56,13 @@ class SocketApi {
                     break;
                 case 9:
                     Driver.handlers.answersAcceptedHandler();
+                    this.lastAnswerSubmissionDone = true;
+                    this.currentQueueIndex += this.answerQueue.length;
+                    this.answerQueue = [];
                     break;
                 case 10:
                     Driver.handlers.answersRejectedHandler();
+                    this.lastAnswerSubmissionDone = true;
                     break;
                 default:
                     break;
@@ -61,7 +77,6 @@ class SocketApi {
 
 
     setNickname(nickname) {
-        console.log(nickname, this.socket);
         Driver.emitters.nicknameEmitter(nickname).then((buf) => this.socket.send(buf));
     }
 
@@ -81,18 +96,24 @@ class SocketApi {
     closeSocket() {
         this.socket.close();
     }
+
+    queueAnswer(answer){
+        this.answerQueue.push(answer);
+        console.log("Answer queue", this.answerQueue);
+    }
 }
 
 let api = null;
 
 
 class SocketWrapper {
-    constructor(url) {
+    constructor(url, config) {
         // To prevent there from being more than one socket intialized at a time
         if (!api) {
             console.log("Opening Connection to", url);
-            api = new SocketApi(url);
+            api = new SocketApi(url, config);
         }
+        this.api = api;
     }
 
     _validateSocket(next, ...args) {
@@ -101,6 +122,10 @@ class SocketWrapper {
         } else {
             throw new Error("Socket is not open, or not connected!");
         }
+    }
+
+    queueAnswer(...args){
+        this._validateSocket(api.queueAnswer.bind(api), ...args);
     }
 
     setNickname(...args) {
@@ -117,6 +142,19 @@ class SocketWrapper {
 
     closeSocket (...args) {
         this._validateSocket(api.closeSocket.bind(api), ...args);
+    }
+
+    submitAnswers(){
+        if(!this.api.lastAnswerSubmissionDone){
+            console.log("Still waiting for last submission...");
+            return;
+        }
+        if(this.api.answerQueue.length === 0){
+            console.log("No answers to submit... queue empty");
+            return;
+        }
+        this.api.answerQueue.lastAnswerSubmissionDone = false;
+        this.api.sendAnswers(this.api.currentQueueIndex, this.api.answerQueue);
     }
 }
 

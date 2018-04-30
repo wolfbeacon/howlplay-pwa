@@ -1,10 +1,16 @@
 import React, {Component} from 'react'
+import {bindActionCreators} from "redux";
+import {queueAnswer} from "../../redux/actions/webSocketActions";
+import {connect} from "react-redux";
 
 class Question extends Component {
     render() {
         const listQuestions = this.props.build.choices.map((item, key) => {
             let id="option-" + key;
-            return (<button className="question-answer" onClick={() => this.props.onSubmitAnswer(this.props.build.answer === key)} id={id} key={key}>{item}</button>)
+            return (<button className="question-answer" onClick={() => {
+                this.props.onSubmitAnswer(this.props.build.answer === key);
+                this.props.queueAnswer(key);
+            }} id={id} key={key}>{item}</button>)
         });
         return(
             <div id="question-area">
@@ -18,6 +24,7 @@ class Question extends Component {
 }
 
 
+const mapDispatchToProps = dispatch => bindActionCreators({queueAnswer}, dispatch);
 
-export default Question;
+export default connect(null, mapDispatchToProps)(Question);
 

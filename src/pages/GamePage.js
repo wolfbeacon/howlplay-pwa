@@ -5,7 +5,7 @@ import {bindActionCreators} from "redux";
 import {getQuizData} from "../redux/actions/gameServerActions";
 import {push} from "react-router-redux";
 import {setCurrentQuestionIndex} from "../redux/actions/gameActions";
-
+import {submitAnswers} from "../redux/actions/webSocketActions";
 
 class GamePage extends Component {
 
@@ -15,18 +15,34 @@ class GamePage extends Component {
         this.state = {
             score: 0,
             finished: false
-        }
+        };
+
+        this.submitAnswersTimer = null;
     }
 
     componentDidMount() {
-        this.props.getQuizData();
+        this.props.getQuizData({
+            nickname: this.props.nickname
+        });
         if (!this.props.gameServerLink) {
             this.props.push('/');
         }
+
+        // Set a interval for submit answers, right now 200 mil secs
+        this.submitAnswersTimer = setInterval(this.onSubmitAnswers, 200);
     }
 
+
+    componentWillUnmount() {
+        clearInterval(this.submitAnswersTimer);
+    }
+
+    onSubmitAnswers = () => {
+        this.props.submitAnswers();
+    };
+
     render() {
-        if (this.props.quizData) {
+        if (this.props.quizData && this.props.socket) {
             return <section id="gamepage">
                 {!this.state.finished ? <div id="question-box">
                     <Question build={this.props.quizData[this.props.currentQuestionIndex]}
@@ -41,8 +57,8 @@ class GamePage extends Component {
                     <p id="question-left"><span
                         id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex}</span> questions
                         left</p>
-                    <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
-                    <p>Using nickname: {this.props.nickname}</p>
+                    <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null} {JSON.stringify(this.props.socket.api.connected)}</p>
+                    <p>Using nickname: {this.props.nickname} {JSON.stringify(this.props.socket.api.nicknameSet)}</p>
                 </div> :
                 <div className="score-display">
                     <h1>Your final score is:</h1>
@@ -61,9 +77,9 @@ const mapStateToProps = state => ({
     nickname: state.gameServer.nickname,
     quizData: state.gameServer.quizData,
     currentQuestionIndex: state.game.currentQuestionIndex,
-    socket: state.socket !== null
+    socket: state.socket
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, push}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, submitAnswers, push}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage);

@@ -3,7 +3,7 @@ import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
 
 
-const DEFAULT_GAME_SERVER = "ws://localhost:1234";
+const DEFAULT_GAME_SERVER = "ws://localhost:9090";
 const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
 
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
@@ -47,14 +47,14 @@ export function checkAndSwitchToGamePage({code, nickname}) {
 
 }
 
-export function getQuizData() {
+export function getQuizData(config) {
     return dispatch => {
         axios.get(QUIZ_LINK).then((data) => {
             dispatch ({
                 type: SET_QUIZ_DATA,
                 payload: data
             });
-            dispatch(initializeSocket());
+            dispatch(initializeSocket(DEFAULT_GAME_SERVER, config));
         });
     }
 }

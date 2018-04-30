@@ -14,6 +14,7 @@ let Driver = {
          * Handles nickname successfully set code from server
          */
         nicknameAcceptedHandler: function () {
+            console.log("Nickname accepted");
             return new Promise(resolve => {
                 resolve(null);
             });
@@ -22,12 +23,14 @@ let Driver = {
          * Handles nickname unsuccessfully set from game server
          */
         nicknameRejectedHandler: function () {
+            console.log("Nickname rejected");
             return new Promise(resolve => {
                 resolve(null);
             });
         },
 
         quizAcceptedHandler: function () {
+            console.log("Quiz accepted");
             return new Promise(resolve => {
                 resolve(null);
             });
@@ -40,12 +43,14 @@ let Driver = {
         },
 
         answersAcceptedHandler: function () {
+            console.log("Answers accepted");
             return new Promise(resolve => {
                 resolve(null);
             });
         },
 
         answersRejectedHandler: function () {
+            console.log("Answers rejected");
             return new Promise(resolve => {
                 resolve(null);
             });
