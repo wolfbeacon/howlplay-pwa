@@ -45,8 +45,10 @@ class GamePage extends Component {
                     <p>Using nickname: {this.props.nickname}</p>
                 </div> :
                 <div className="score-display">
-                    <h1>Your final score is:</h1>
-                    <span>{this.state.score} / {this.props.quizData.length}</span>
+                    <h1 className="score-end-header">That&#39;s it!</h1>
+                    <h2 className="score-end-sub">Your final score is:</h2>
+                    <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
+                    <p className="score-end-hint">Please do not close this page until the game ends.</p>
                 </div>
                 }
             </section>
