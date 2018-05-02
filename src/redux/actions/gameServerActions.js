@@ -1,11 +1,11 @@
 import {push} from 'react-router-redux';
 import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
+import {joinGame} from '../../node_api.js';
 
-
-const DEFAULT_GAME_SERVER = "ws://localhost:9090";
 const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
 
+var GAME_SERVER = "null";
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
 export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
@@ -36,12 +36,20 @@ export function checkAndSwitchToGamePage({code, nickname}) {
         if (error) {
             dispatch({type: GAME_SERVER_INPUT_ERROR, input: error.input, error: error.error});
         } else {
+          joinGame(code, function(err, res) {
+            if (err) {
+              dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
+              return;
+            }
+            console.log(res.url);
+            GAME_SERVER = res.url;
             dispatch({
                 type: SET_GAME_SERVER,
-                payload: {nickname, link: DEFAULT_GAME_SERVER}
+                payload: {nickname, link: res.url}
             });
             dispatch({type: GAME_SERVER_INPUT_ERROR, error: null});
             dispatch(push('/game'));
+          });
         }
     }
 
@@ -54,7 +62,7 @@ export function getQuizData(config) {
                 type: SET_QUIZ_DATA,
                 payload: data
             });
-            dispatch(initializeSocket(DEFAULT_GAME_SERVER, config));
+            dispatch(initializeSocket(GAME_SERVER, config));
         });
     }
 }
