@@ -8,6 +8,23 @@
           ". . ."
 ;
   height: 100%;
+  background-color: $dark-gray;
+}
+
+.score-end-header {
+  font-size: 2.1rem;
+  color: $primary;
+}
+
+.score-end-sub {
+  font-size: 1.2rem;
+  line-height: 10px;
+  padding-bottom: 6px;
+}
+
+.score-end-hint {
+  font-size: 0.8rem;
+  padding-top: 14px;
 }
 
 #question-box {
@@ -31,11 +48,15 @@
 }
 
 .score-display {
+  background-color: white;
+  padding: 20px 30px;
+  padding-bottom: 16px;
   text-align: center;
   grid-area: box;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   span {
-    font-size: 20px;
-    padding-top: 18px;
+    font-size: 1.4rem;
+    letter-spacing: -1px;
   }
 }
 

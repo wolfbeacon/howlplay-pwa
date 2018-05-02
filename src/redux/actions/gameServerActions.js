@@ -18,10 +18,10 @@ export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
 function _checkAllInput(code, nickname) {
     // code must be X6Y7Z format
     if (!code.toUpperCase().match(/^[A-Z0-9]{5}$/)) {
-        return "Invalid server code"
+        return {input: "QUIZCODE", error: "Invalid Server Code"};
         // nickname cannot contain special characters, and must be 1-256 characters long.
     } else if (!nickname.match(/^[a-zA-Z0-9]{1,256}$/)) {
-        return "Invalid nickname";
+        return {input: "NICKNAME", error: "Invalid Nickname"};
     }
     return null;
 }
@@ -34,7 +34,7 @@ export function checkAndSwitchToGamePage({code, nickname}) {
     return (dispatch) => {
         let error =_checkAllInput(code, nickname);
         if (error) {
-            dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
+            dispatch({type: GAME_SERVER_INPUT_ERROR, input: error.input, error: error.error});
         } else {
           joinGame(code, function(err, res) {
             if (err) {

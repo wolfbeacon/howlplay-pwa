@@ -48,26 +48,25 @@ class LoginForm extends Component {
                             <label className="login-form-label sr-only" htmlFor="code-input">Server Code</label>
                             <input type="text" className="login-input" id="code-input" name="code"
                                    onChange={this.onTextChange.bind(this)} placeholder="X8UKL"/>
+                            {this.props.type === "QUIZCODE" ? <label id="login-error-area">{this.props.error}</label> : null}
                         </div>
                         <div className="login-input-section">
                             <label className="login-form-label sr-only" htmlFor="nickname-input">Nickname</label>
                             <input type="text" className="login-input" id="nickname-input" name="nickname"
                                    onChange={this.onTextChange.bind(this)} placeholder="Nickname"/>
+                            {this.props.type === "NICKNAME" ? <label id="login-error-area">{this.props.error}</label> : null}
                         </div>
                     </div>
                 </div>
-                <div id="login-error-container">
-                    {this.props.error ? <p id="login-error-area">{this.props.error}</p> : null}
-                    <button type="button" id="login-submit-button"
-                            onClick={() => {this.props.checkAndSwitchToGamePage(this.state)}}>Login
-                    </button>
-                </div>
+                <button type="button" id="login-submit-button"
+                        onClick={() => {this.props.checkAndSwitchToGamePage(this.state);console.log(this.props);} }>Login
+                </button>
             </form>
         );
     }
 }
 
-const mapStateToProps = state => ({error: state.gameServer.error});
+const mapStateToProps = state => ({error: state.gameServer.error, type: state.gameServer.input});
 
 const mapDispatchToProps = dispatch => bindActionCreators({checkAndSwitchToGamePage}, dispatch);
 

@@ -38,12 +38,11 @@
 }
 
 #login-error-area {
+  display: block;
   color: $red;
-  margin-bottom: 5px;
-}
-
-#login-error-container {
-  margin: 10px 0 5px 0;
+  font-weight: bold;
+  padding-top: 4px;
+  font-size: 0.72rem;
 }
 
 .login-input {
