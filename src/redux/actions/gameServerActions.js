@@ -1,6 +1,7 @@
 import {push} from 'react-router-redux';
 import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
+import {joinGame} from '../../node_api.js';
 
 
 const DEFAULT_GAME_SERVER = "ws://localhost:9090";
@@ -36,12 +37,19 @@ export function checkAndSwitchToGamePage({code, nickname}) {
         if (error) {
             dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
         } else {
+          joinGame(code, function(err, res) {
+            if (err) {
+              dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
+              return;
+            }
+            console.log(res);
             dispatch({
                 type: SET_GAME_SERVER,
                 payload: {nickname, link: DEFAULT_GAME_SERVER}
             });
             dispatch({type: GAME_SERVER_INPUT_ERROR, error: null});
             dispatch(push('/game'));
+          });
         }
     }
 
