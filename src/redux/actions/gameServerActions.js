@@ -42,10 +42,10 @@ export function checkAndSwitchToGamePage({code, nickname}) {
               dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
               return;
             }
-            console.log(res);
+            console.log(res.url);
             dispatch({
                 type: SET_GAME_SERVER,
-                payload: {nickname, link: DEFAULT_GAME_SERVER}
+                payload: {nickname, link: res.url}
             });
             dispatch({type: GAME_SERVER_INPUT_ERROR, error: null});
             dispatch(push('/game'));

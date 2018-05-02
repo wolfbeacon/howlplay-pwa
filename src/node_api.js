@@ -1,3 +1,5 @@
+const mainserver_url = 'http://localhost:8080/pwa/game';
+
 function send(method, url, data, callback){
       var xhr = new XMLHttpRequest();
       xhr.onload = function() {
@@ -13,5 +15,5 @@ function send(method, url, data, callback){
 }
 
 export function joinGame(code, callback) {
-  send('POST', 'http://localhost:8080/pwa/game', {code : code}, callback);
+  send('POST', mainserver_url, {code : code}, callback);
 }
