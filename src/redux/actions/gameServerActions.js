@@ -3,7 +3,7 @@ import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
 import {joinGame} from '../../node_api.js';
 
-const QUIZ_LINK2 = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
+// const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
 const QUIZ_LINK = 'http://localhost:8080/quiz/';
 
 var GAME_SERVER = "null";
