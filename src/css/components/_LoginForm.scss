@@ -22,6 +22,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 20px;
+  transition: all 0.4s ease-in-out 0s;
 }
 
 #login-subheading {
@@ -37,12 +38,17 @@
   width: 100px;
 }
 
-#login-error-area {
+.login-error-area {
   display: block;
   color: $red;
   font-weight: bold;
   padding-top: 4px;
   font-size: 0.72rem;
+}
+
+p.login-error-area {
+  padding: 0 10px;
+  text-align: center;
 }
 
 .login-input {
