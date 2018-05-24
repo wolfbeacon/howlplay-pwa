@@ -48,7 +48,7 @@ class LoginForm extends Component {
                             <label className="login-form-label sr-only" htmlFor="code-input">Server Code</label>
                             <input type="text" className="login-input" id="code-input" name="code"
                                    onChange={this.onTextChange.bind(this)} placeholder="X8UKL"/>
-                            {this.props.type === "QUIZCODE" || this.props.type === "QUIZCODE" ? <label className="login-error-area">{this.props.error}</label> : null}
+                            {this.props.type === "QUIZCODE" ? <label className="login-error-area">{this.props.error}</label> : null}
                         </div>
                         <div className="login-input-section">
                             <label className="login-form-label sr-only" htmlFor="nickname-input">Nickname</label>
