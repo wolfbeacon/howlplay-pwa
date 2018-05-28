@@ -3,9 +3,11 @@ import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
 import {joinGame} from '../../node_api.js';
 
-const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
+// const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
+const QUIZ_LINK = 'http://localhost:8080/quiz/';
 
 var GAME_SERVER = "null";
+var QUIZ_ID = null;
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
 export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
@@ -41,8 +43,9 @@ export function checkAndSwitchToGamePage({code, nickname}) {
               dispatch({type: GAME_SERVER_INPUT_ERROR, input: "SERVER", error: "There appears to be no gameserver for this code."});
               return;
             }
-            console.log(res.url);
+            console.log(res);
             GAME_SERVER = res.url;
+            QUIZ_ID = res.id;
             dispatch({
                 type: SET_GAME_SERVER,
                 payload: {nickname, link: res.url}
@@ -56,13 +59,14 @@ export function checkAndSwitchToGamePage({code, nickname}) {
 }
 
 export function getQuizData(config) {
-    return dispatch => {
-        axios.get(QUIZ_LINK).then((data) => {
-            dispatch ({
-                type: SET_QUIZ_DATA,
-                payload: data
-            });
-            dispatch(initializeSocket(GAME_SERVER, config));
-        });
-    }
+  return dispatch => {
+      axios.get(QUIZ_LINK + QUIZ_ID).then((data) => {
+          console.log(data);
+          dispatch ({
+              type: SET_QUIZ_DATA,
+              payload: data.data
+          });
+          dispatch(initializeSocket(GAME_SERVER, config));
+      });
+  }
 }
