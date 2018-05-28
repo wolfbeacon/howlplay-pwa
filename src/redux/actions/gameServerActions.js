@@ -36,11 +36,11 @@ export function checkAndSwitchToGamePage({code, nickname}) {
     return (dispatch) => {
         let error =_checkAllInput(code, nickname);
         if (error) {
-            dispatch({type: GAME_SERVER_INPUT_ERROR, input: error.input, error: error.error});
+            dispatch({type: GAME_SERVER_INPUT_ERROR, ...error});
         } else {
           joinGame(code, function(err, res) {
             if (err) {
-              dispatch({type: GAME_SERVER_INPUT_ERROR, error: error});
+              dispatch({type: GAME_SERVER_INPUT_ERROR, input: "SERVER", error: "There appears to be no gameserver for this code."});
               return;
             }
             console.log(res);
@@ -50,7 +50,7 @@ export function checkAndSwitchToGamePage({code, nickname}) {
                 type: SET_GAME_SERVER,
                 payload: {nickname, link: res.url}
             });
-            dispatch({type: GAME_SERVER_INPUT_ERROR, error: null});
+            dispatch({type: GAME_SERVER_INPUT_ERROR, input: "SERVER", error: "You've been disconnected!"});
             dispatch(push('/game'));
           });
         }
