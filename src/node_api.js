@@ -1,4 +1,6 @@
-const mainserver_url = 'http://localhost:8080/pwa/game';
+import {DEFAULT_QUIZ_CODE_LINK} from "./configurations";
+
+const mainserver_url = DEFAULT_QUIZ_CODE_LINK;
 
 function send(method, url, data, callback){
       var xhr = new XMLHttpRequest();
