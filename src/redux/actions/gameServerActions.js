@@ -2,12 +2,12 @@ import {push} from 'react-router-redux';
 import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
 import {joinGame} from '../../node_api.js';
+import {DEFAULT_QUIZ_LINK} from "../../configurations";
 
-// const QUIZ_LINK = 'https://gist.githubusercontent.com/junthehacker/f17ea51b500dae8c040716f61eafe68d/raw/5c0373d717c3d16475385ac9d6e34c9265c16c6d/better-quiz.json';
-const QUIZ_LINK = 'http://localhost:8080/quiz/';
+const QUIZ_LINK = DEFAULT_QUIZ_LINK;
 
-var GAME_SERVER = "null";
-var QUIZ_ID = null;
+let GAME_SERVER = "null";
+let QUIZ_ID = null;
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
 export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
