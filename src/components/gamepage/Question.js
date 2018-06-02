@@ -8,7 +8,8 @@ class Question extends Component {
         const listQuestions = this.props.build.choices.map((item, key) => {
             let id="option-" + key;
             return (<button className="question-answer" onClick={() => {
-                this.props.onSubmitAnswer(this.props.build.answer === key);
+              let answer = parseInt(this.props.build.answer, 10);
+                this.props.onSubmitAnswer(answer === key);
                 this.props.queueAnswer(key);
             }} id={id} key={key}>{item}</button>)
         });
@@ -27,4 +28,3 @@ class Question extends Component {
 const mapDispatchToProps = dispatch => bindActionCreators({queueAnswer}, dispatch);
 
 export default connect(null, mapDispatchToProps)(Question);
-

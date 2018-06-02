@@ -1,6 +1,6 @@
-import {DEFAULT_QUIZ_CODE_LINK} from "./configurations";
+import {DEFAULT_QUIZ_LINK} from "./configurations.example";
 
-const mainserver_url = DEFAULT_QUIZ_CODE_LINK;
+const mainserver_url = DEFAULT_QUIZ_LINK;
 
 function send(method, url, data, callback){
       var xhr = new XMLHttpRequest();
@@ -18,4 +18,19 @@ function send(method, url, data, callback){
 
 export function joinGame(code, callback) {
   send('POST', mainserver_url, {code : code}, callback);
+  // fetch(mainserver_url, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  //   body: JSON.stringify({code: code})
+  //
+  // })
+  // .then(response => {
+  //   if (response.status !== 200) {console.log('Error'); return callback('Error', null);}
+  //   return response.json();
+  // })
+  // .then(data => {
+  //   callback(null, data);
+  // })
 }
