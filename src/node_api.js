@@ -18,19 +18,4 @@ function send(method, url, data, callback){
 
 export function joinGame(code, callback) {
   send('POST', mainserver_url, {code : code}, callback);
-  // fetch(mainserver_url, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json'
-  //   },
-  //   body: JSON.stringify({code: code})
-  //
-  // })
-  // .then(response => {
-  //   if (response.status !== 200) {console.log('Error'); return callback('Error', null);}
-  //   return response.json();
-  // })
-  // .then(data => {
-  //   callback(null, data);
-  // })
 }
