@@ -2,7 +2,7 @@ import {push} from 'react-router-redux';
 import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
 import {joinGame} from '../../node_api.js';
-import {DEFAULT_QUIZ_QUES_LINK} from "../../configurations.example";
+import {DEFAULT_QUIZ_QUES_LINK} from "../../configurations";
 
 const QUIZ_QUES_LINK = DEFAULT_QUIZ_QUES_LINK;
 

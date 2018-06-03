@@ -1,4 +1,4 @@
-import {DEFAULT_QUIZ_LINK} from "./configurations.example";
+import {DEFAULT_QUIZ_LINK} from "./configurations";
 
 const mainserver_url = DEFAULT_QUIZ_LINK;
 
