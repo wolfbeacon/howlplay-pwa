@@ -3,9 +3,9 @@
   grid-template-rows: 1fr auto 1fr;
   grid-template-columns: 1fr auto 1fr;
   grid-template-areas:
-          ". . ."
-          ". box ."
-          ". . ."
+    ".  .  ."
+    ". box ."
+    ".  .  ."
 ;
   height: 100%;
   background-color: $dark-gray;
@@ -58,6 +58,46 @@
     font-size: 1.4rem;
     letter-spacing: -1px;
   }
+}
+
+.score-end-review {
+  background-color: $light-gray;
+  margin: 15px -30px 4px;
+  padding: 18px 30px 15px;
+}
+
+.score-end-review-header {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  color: $primary-dark;
+}
+
+.score-end-review-item {
+  padding-bottom: 14px;
+}
+
+.score-end-review-question {
+  font-size: 1.1rem;
+}
+
+.score-end-review-option {
+  margin: 6px 55px 2px;
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  color: $light-gray;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.score-end-review-true {
+  background-color: #15da08;
+}
+
+.score-end-review-false {
+  background-color: #da0a0a;
+}
+
+.score-end-review-answer {
+  font-size: 0.7rem;
 }
 
 @keyframes fade-in {
