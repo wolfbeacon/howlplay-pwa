@@ -57,8 +57,8 @@ class GamePage extends Component {
                     <p id="question-left"><span
                         id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex}</span> questions
                         left</p>
-                    <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null} {JSON.stringify(this.props.socket.api.connected)}</p>
-                    <p>Using nickname: {this.props.nickname} {JSON.stringify(this.props.socket.api.nicknameSet)}</p>
+                    <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
+                    <p>Using nickname: {this.props.nickname}</p>
                 </div> :
                 <div className="score-display">
                     <h1 className="score-end-header">That&#39;s it!</h1>
