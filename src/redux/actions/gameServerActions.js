@@ -2,9 +2,9 @@ import {push} from 'react-router-redux';
 import axios from "axios/index";
 import {initializeSocket} from "./webSocketActions";
 import {joinGame} from '../../node_api.js';
-import {DEFAULT_QUIZ_LINK} from "../../configurations";
+import {DEFAULT_QUIZ_QUES_LINK} from "../../configurations";
 
-const QUIZ_LINK = DEFAULT_QUIZ_LINK;
+const QUIZ_QUES_LINK = DEFAULT_QUIZ_QUES_LINK;
 
 let GAME_SERVER = "null";
 let QUIZ_ID = null;
@@ -60,7 +60,7 @@ export function checkAndSwitchToGamePage({code, nickname}) {
 
 export function getQuizData(config) {
   return dispatch => {
-      axios.get(QUIZ_LINK + QUIZ_ID).then((data) => {
+      axios.get(QUIZ_QUES_LINK + QUIZ_ID).then((data) => {
           console.log(data);
           dispatch ({
               type: SET_QUIZ_DATA,

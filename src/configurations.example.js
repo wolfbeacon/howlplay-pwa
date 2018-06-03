@@ -1,1 +1,0 @@
-export const DEFAULT_QUIZ_LINK = "http://localhost:8080/quiz/";

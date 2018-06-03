@@ -1,6 +1,6 @@
-import {DEFAULT_QUIZ_CODE_LINK} from "./configurations";
+import {DEFAULT_QUIZ_LINK} from "./configurations";
 
-const mainserver_url = DEFAULT_QUIZ_CODE_LINK;
+const mainserver_url = DEFAULT_QUIZ_LINK;
 
 function send(method, url, data, callback){
       var xhr = new XMLHttpRequest();
