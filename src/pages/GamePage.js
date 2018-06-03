@@ -29,7 +29,7 @@ class GamePage extends Component {
         }
 
         // Set a interval for submit answers, right now 200 mil secs
-        this.submitAnswersTimer = setInterval(this.onSubmitAnswers, 200);
+        this.submitAnswersTimer = setInterval(this.onSubmitAnswers.bind(this), 200);
     }
 
 
@@ -37,23 +37,25 @@ class GamePage extends Component {
         clearInterval(this.submitAnswersTimer);
     }
 
-    onSubmitAnswers = () => {
+    onSubmitAnswers()  {
         this.props.submitAnswers();
-    };
+    }
+
+    onSubmitAnswer(isCorrect) {
+        if (this.props.currentQuestionIndex < this.props.quizData.length - 1) {
+            this.props.setCurrentQuestionIndex(this.props.currentQuestionIndex + 1)
+        } else {
+            this.setState({ finished: true, score : this.state.score });
+        }
+        if (isCorrect) this.setState({score: this.state.score + 1})
+    }
 
     render() {
         if (this.props.quizData && this.props.socket) {
             return <section id="gamepage">
                 {!this.state.finished ? <div id="question-box">
                     <Question build={this.props.quizData[this.props.currentQuestionIndex]}
-                              onSubmitAnswer={(isCorrect) => {
-                                  if (this.props.currentQuestionIndex < this.props.quizData.length - 1) {
-                                      this.props.setCurrentQuestionIndex(this.props.currentQuestionIndex + 1)
-                                  } else {
-                                      this.setState({ finished: true, score : this.state.score });
-                                  }
-                                  if (isCorrect) this.setState({score: this.state.score + 1})
-                              }}/>
+                              onSubmitAnswer={this.onSubmitAnswer.bind(this)}/>
                     <p id="question-left"><span
                         id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex}</span> questions
                         left</p>
