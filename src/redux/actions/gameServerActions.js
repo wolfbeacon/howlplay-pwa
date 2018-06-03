@@ -4,7 +4,7 @@ import {initializeSocket} from "./webSocketActions";
 import {joinGame} from '../../node_api.js';
 import {DEFAULT_QUIZ_LINK} from "../../configurations";
 
-const QUIZ_LINK = DEFAULT_QUIZ_LINK;
+const QUIZ_LINK = DEFAULT_QUIZ_QUES_LINK;
 
 let GAME_SERVER = "null";
 let QUIZ_ID = null;
