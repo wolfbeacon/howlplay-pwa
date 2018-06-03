@@ -55,7 +55,7 @@ class GamePage extends Component {
                                   if (this.props.currentQuestionIndex < this.props.quizData.length - 1) {
                                       this.props.setCurrentQuestionIndex(this.props.currentQuestionIndex + 1)
                                   } else {
-                                      this.setState({ finished: true });
+                                      this.setState({ finished: true, score : this.state.score });
                                   }
                                   if (isCorrect) this.setState({score: this.state.score + 1})
                               }}/>
