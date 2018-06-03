@@ -9,7 +9,7 @@ class Question extends Component {
             let id="option-" + key;
             return (<button className="question-answer" onClick={() => {
               let answer = parseInt(this.props.build.answer, 10);
-                this.props.onSubmitAnswer(answer === key);
+                this.props.onSubmitAnswer(answer === key, key);
                 this.props.queueAnswer(key);
             }} id={id} key={key}>{item}</button>)
         });
