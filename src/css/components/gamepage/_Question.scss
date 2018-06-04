@@ -7,15 +7,9 @@
   display: flex;
   flex-direction: column;
   margin: -10px; // Offset margin from question-answer
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 50% 50%;
-  grid-template:
-          "a b"
-          "c d"
-;
-
   @include tablet {
-    display: grid;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }
 
@@ -26,6 +20,21 @@
   border: 2px solid $primary;
   color: $primary;
   transition: all 0.2s ease-in-out 0s;
+  @include tablet {
+    width: calc(50% - 16px);
+  }
+}
+
+.image-answer {
+  margin: 8px 0;
+  border: solid 2px $primary;
+  width: 100%;
+  object-fit: contain;
+  @include tablet {
+    margin: 8px;
+    width: calc(50% - 20px);
+    height: 300px;
+  }
 }
 
 //.question-answer:hover, .question-answer:focus, .question-answer:active {
@@ -33,19 +42,3 @@
 //  color: white;
 //  outline: none;
 //}
-
-#option-0 {
-  grid-area: a;
-}
-
-#option-1 {
-  grid-area: b;
-}
-
-#option-2 {
-  grid-area: c;
-}
-
-#option-3 {
-  grid-area: d;
-}

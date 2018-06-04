@@ -29,7 +29,7 @@ class GamePage extends Component {
         }
 
         // Set a interval for submit answers, right now 200 mil secs
-        this.submitAnswersTimer = setInterval(this.onSubmitAnswers.bind(this), 200);
+        this.submitAnswersTimer = setInterval(this.onSubmitAnswers.bind(this), 30000);
     }
 
 
@@ -51,7 +51,7 @@ class GamePage extends Component {
     }
 
     render() {
-        if (this.props.quizData && this.props.socket) {
+        if (this.props.quizData) {
             return <section id="gamepage">
                 {!this.state.finished ? <div id="question-box">
                     <Question build={this.props.quizData[this.props.currentQuestionIndex]}
