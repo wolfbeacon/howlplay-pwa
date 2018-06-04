@@ -38,6 +38,11 @@
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
+#score-box {
+  grid-area: box;
+  max-width: 650px;
+}
+
 #question-left {
   margin-top: 24px;
 }
@@ -61,7 +66,7 @@
 }
 
 .score-end-review {
-  background-color: $light-gray;
+  background-color: $lighter-gray;
   margin: 15px -30px 4px;
   padding: 18px 30px 15px;
 }
@@ -73,18 +78,20 @@
 }
 
 .score-end-review-item {
-  padding-bottom: 14px;
+  padding-bottom: 20px;
 }
 
 .score-end-review-question {
   font-size: 1.1rem;
+  padding: 0 20px;
 }
 
 .score-end-review-option {
-  margin: 6px 55px 2px;
+  margin: 6px auto 2px;
+  width: 70%;
   padding: 10px 20px;
   font-size: 0.8rem;
-  color: $light-gray;
+  color: $lighter-gray;
   border: 1px solid rgba(0,0,0,0.04);
 }
 
