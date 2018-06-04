@@ -14,6 +14,7 @@ class GamePage extends Component {
 
         this.state = {
             score: 0,
+            keys: [],
             finished: false
         };
 
@@ -41,7 +42,8 @@ class GamePage extends Component {
         this.props.submitAnswers();
     }
 
-    onSubmitAnswer(isCorrect) {
+    onSubmitAnswer(isCorrect, key) {
+        this.state.keys.push(key);
         if (this.props.currentQuestionIndex < this.props.quizData.length - 1) {
             this.props.setCurrentQuestionIndex(this.props.currentQuestionIndex + 1)
         } else {
