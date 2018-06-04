@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 
 const submitAnswer = (build, index, queueAnswer, onSubmitAnswer) => {
     let answer = parseInt(build.answer, 10);
-    onSubmitAnswer(answer === index);
+    onSubmitAnswer(answer === index, index);
     queueAnswer(index);
 };
 
