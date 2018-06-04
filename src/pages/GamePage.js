@@ -67,7 +67,7 @@ class GamePage extends Component {
                     <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
                     <p>Using nickname: {this.props.nickname}</p>
                 </div> :
-                <div className="score-display">
+                <div className="score-display" id="score-box">
                     <h1 className="score-end-header">That&#39;s it!</h1>
                     <p className="score-end-sub">Your final score is:</p>
                     <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
