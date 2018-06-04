@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import Question from '../components/gamepage/Question'
+import Question from '../components/gamepage/Question';
+import EndList from '../components/gamepage/EndList';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {getQuizData} from "../redux/actions/gameServerActions";
@@ -14,7 +15,7 @@ class GamePage extends Component {
 
         this.state = {
             score: 0,
-            keys: [],
+            answers: [],
             finished: false
         };
 
@@ -42,8 +43,8 @@ class GamePage extends Component {
         this.props.submitAnswers();
     }
 
-    onSubmitAnswer(isCorrect, key) {
-        this.state.keys.push(key);
+    onSubmitAnswer(isCorrect, key, type) {
+        this.state.answers.push({answer: key, type: type});
         if (this.props.currentQuestionIndex < this.props.quizData.length - 1) {
             this.props.setCurrentQuestionIndex(this.props.currentQuestionIndex + 1)
         } else {
@@ -51,6 +52,8 @@ class GamePage extends Component {
         }
         if (isCorrect) this.setState({score: this.state.score + 1})
     }
+
+
 
     render() {
         if (this.state.finished) {
@@ -71,34 +74,7 @@ class GamePage extends Component {
                     <h1 className="score-end-header">That&#39;s it!</h1>
                     <p className="score-end-sub">Your final score is:</p>
                     <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
-                    <div className="score-end-review">
-                      <h2 className="score-end-review-header">Overview</h2>
-                      {
-                        /* Go through all the questions */
-                        this.props.quizData.map((item, key) => {
-                          let q = this.props.quizData[key];
-
-                          return <div className="score-end-review-item" key={key}>
-                            <h3 className="score-end-review-question">{item.title}</h3>
-
-                            {/* Get selected answer and set it's state */}
-                            <p className={
-                              // eslint-disable-next-line
-                              q.answer == this.state.keys[key]?
-                              "score-end-review-option score-end-review-true":
-                              "score-end-review-option score-end-review-false"
-                            }>{ q.choices[this.state.keys[key]] }</p>
-
-                            {/* Provide solution if incorrect answer */}
-                            {
-                              // eslint-disable-next-line
-                              q.answer != this.state.keys[key]?
-                              <p className="score-end-review-answer">The correct answer is "{ q.choices[q.answer] }"</p> : null
-                            }
-                          </div>
-                        })
-                      }
-                    </div>
+                    <EndList answers={this.state.answers} questions={this.props.quizData}/>
                     <p className="score-end-hint">Please do not close this page until the game ends.</p>
                 </div>
                 }
