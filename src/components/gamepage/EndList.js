@@ -44,23 +44,30 @@ const buildChoice = (answer, question) => {
 // Go through all the questions
 const buildList = (answers, questions) => questions.map((item, key) => {
   let q = questions[key];
-  let a = answers[key].answer;
-  let type = answers[key].type;
 
-  return <div className="score-end-review-item" key={key}>
-    <h3 className="score-end-review-question">{item.title}</h3>
-    { type === 'OPTION' ? (
-      buildChoice(a, q)
-    ) : type === 'IMAGE' ? (
-      buildImage(a, q)
-    ) : null }
-  </div>
+  if (answers[key]) {
+    let a = answers[key].answer;
+    let type = answers[key].type;
+
+    return <div className="score-end-review-item" key={key}>
+      <h3 className="score-end-review-question">{item.title}</h3>
+      {type === 'OPTION' ? (
+        buildChoice(a, q)
+      ) : type === 'IMAGE' ? (
+        buildImage(a, q)
+      ) : null}
+    </div>
+  }
+  return null;
 });
 
-const EndList = ({answers, questions}) =>
+const EndList = ({answers, questions}) => (answers.length !== 0 ?
   <div className="score-end-review">
     <h2 className="score-end-review-header">Overview</h2>
     {buildList(answers, questions)}
-  </div>;
+  </div>
+  :
+  null
+);
 
 export default EndList;

@@ -5,7 +5,8 @@ const initialState = {
     nickname: "",
     error: null,
     input: null,
-    quizData: null
+    quizData: null,
+    end: false
 };
 
 
@@ -19,6 +20,8 @@ function gameServerReducer(state = initialState, action){
             return {...state, input: action.input, error: action.error};
         case SET_QUIZ_DATA:
             return { ...state, quizData: action.payload.questions };
+        case "END_GAME":
+            return { ...state, end: true };
         default:
             return state;
     }

@@ -31,9 +31,8 @@ class GamePage extends Component {
         }
 
         // Set a interval for submit answers, right now 200 mil secs
-        this.submitAnswersTimer = setInterval(this.onSubmitAnswers.bind(this), 200);
+        this.submitAnswersTimer = setInterval(this.onSubmitAnswers.bind(this), 500);
     }
-
 
     componentWillUnmount() {
         clearInterval(this.submitAnswersTimer);
@@ -61,7 +60,7 @@ class GamePage extends Component {
         }
         if (this.props.quizData && this.props.socket) {
             return <section id="gamepage">
-                {!this.state.finished ? <div id="question-box">
+                {!this.state.finished && !this.props.end ? <div id="question-box">
                     <Question build={this.props.quizData[this.props.currentQuestionIndex]}
                               onSubmitAnswer={this.onSubmitAnswer.bind(this)}/>
                     <p id="question-left"><span
@@ -75,7 +74,12 @@ class GamePage extends Component {
                     <p className="score-end-sub">Your final score is:</p>
                     <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
                     <EndList answers={this.state.answers} questions={this.props.quizData}/>
-                    <p className="score-end-hint">Please do not close this page until the game ends.</p>
+                    {
+                        this.props.end ?
+                        <p className="score-end-hint">The game has ended. Thank you for playing using HowlPlay.</p>
+                        :
+                        <p className="score-end-hint">Please do not close this page until the game ends.</p>
+                    }
                 </div>
                 }
             </section>
@@ -90,7 +94,8 @@ const mapStateToProps = state => ({
     nickname: state.gameServer.nickname,
     quizData: state.gameServer.quizData,
     currentQuestionIndex: state.game.currentQuestionIndex,
-    socket: state.socket
+    socket: state.socket,
+    end: state.gameServer.end
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, submitAnswers, push}, dispatch);
