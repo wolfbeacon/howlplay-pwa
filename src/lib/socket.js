@@ -33,7 +33,7 @@ class SocketApi {
 
         this.socket.onmessage = (e) => {
             let code = getCode(e.data);
-            console.log(code);
+            // console.log(code);
             switch (code) {
                 case 0:
                     Driver.handlers.pingHandler().then(buf => this.socket.send(buf));
@@ -63,6 +63,10 @@ class SocketApi {
                 case 10:
                     Driver.handlers.answersRejectedHandler();
                     this.lastAnswerSubmissionDone = true;
+                    break;
+                case 13:
+                    console.log("END OF ZE GAME");
+                    store.dispatch({type: "END_GAME"});
                     break;
                 default:
                     break;

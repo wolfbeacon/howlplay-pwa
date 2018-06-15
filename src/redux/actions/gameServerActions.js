@@ -44,7 +44,8 @@ export function checkAndSwitchToGamePage({code, nickname}) {
               return;
             }
             console.log(res);
-            GAME_SERVER = res.url;
+            // GAME_SERVER = res.url;
+            GAME_SERVER = "ws://localhost:9090";
             QUIZ_ID = res.id;
             dispatch({
                 type: SET_GAME_SERVER,
