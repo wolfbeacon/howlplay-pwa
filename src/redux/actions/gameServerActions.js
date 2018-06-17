@@ -11,6 +11,8 @@ let QUIZ_ID = null;
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
 export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
+export const END_GAME = "END_GAME";
+export const START_GAME = "START_GAME";
 
 /**
  * Check all input, if any input is invalid, hasError will be set to true with an error message
@@ -44,8 +46,8 @@ export function checkAndSwitchToGamePage({code, nickname}) {
               return;
             }
             console.log(res);
-            // GAME_SERVER = res.url;
-            GAME_SERVER = "ws://localhost:9090";
+            GAME_SERVER = res.url;
+            // GAME_SERVER = "ws://localhost:9090";
             QUIZ_ID = res.id;
             dispatch({
                 type: SET_GAME_SERVER,
