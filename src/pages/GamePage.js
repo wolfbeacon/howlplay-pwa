@@ -52,6 +52,7 @@ class GamePage extends Component {
         if (isCorrect) this.setState({score: this.state.score + 1})
     }
 
+<<<<<<< Updated upstream
     gameScreen() {
         return <div id="question-box">
             <Question build={this.props.quizData[this.props.currentQuestionIndex]}
@@ -91,6 +92,38 @@ class GamePage extends Component {
             } else {
                 return this.endScreen();
             }
+=======
+    getContent() {
+        if (!this.state.finished) {
+            return (
+                <div id="question-box">
+                    <Question build={this.props.quizData[this.props.currentQuestionIndex]}
+                              onSubmitAnswer={this.onSubmitAnswer.bind(this)}/>
+                    <p id="question-left"><span
+                        id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex}</span> questions
+                        left</p>
+                    <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
+                    <p>Using nickname: {this.props.nickname}</p>
+                </div>
+            );
+        }
+        return (
+            <div className="score-display" id="score-box">
+                <h1 className="score-end-header">That&#39;s it!</h1>
+                <p className="score-end-sub">Your final score is:</p>
+                <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
+                <EndList answers={this.state.answers} questions={this.props.quizData}/>
+                <p className="score-end-hint">Please do not close this page until the game ends.</p>
+            </div>
+        );
+    }
+
+    render() {
+        if (this.props.quizData && this.props.socket) {
+            return <section id="gamepage">
+                {this.getContent()}
+            </section>
+>>>>>>> Stashed changes
         } else {
             return <div className="score-display" style={{ padding: "40px" }}><p>Loading ...</p></div>;
         }

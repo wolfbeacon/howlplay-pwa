@@ -45,29 +45,32 @@ const buildChoice = (answer, question) => {
 const buildList = (answers, questions) => questions.map((item, key) => {
   let q = questions[key];
 
-  if (answers[key]) {
-    let a = answers[key].answer;
-    let type = answers[key].type;
+    const buildList = (answers, questions) => questions.map((item, key) => {
+        let q = questions[key];
 
-    return <div className="score-end-review-item" key={key}>
-      <h3 className="score-end-review-question">{item.title}</h3>
-      {type === 'OPTION' ? (
-        buildChoice(a, q)
-      ) : type === 'IMAGE' ? (
-        buildImage(a, q)
-      ) : null}
-    </div>
-  }
-  return null;
-});
+        if (answers[key]) {
+            let a = answers[key].answer;
+            let type = answers[key].type;
 
-const EndList = ({answers, questions}) => (answers.length !== 0 ?
-  <div className="score-end-review">
-    <h2 className="score-end-review-header">Overview</h2>
-    {buildList(answers, questions)}
-  </div>
-  :
-  null
-);
+            return <div className="score-end-review-item" key={key}>
+                <h3 className="score-end-review-question">{item.title}</h3>
+                {type === 'OPT' ? (
+                    buildChoice(a, q)
+                ) : type === 'IMG' ? (
+                    buildImage(a, q)
+                ) : null}
+            </div>
+        }
+        return null;
+    });
+
+    const EndList = ({answers, questions}) => (answers.length !== 0 ?
+            <div className="score-end-review">
+                <h2 className="score-end-review-header">Overview</h2>
+                {buildList(answers, questions)}
+            </div>
+            :
+            null
+    );
 
 export default EndList;

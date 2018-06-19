@@ -4,11 +4,13 @@ import ImageAnswer from "./ImageAnswer";
 
 
 const listQuestions = (build, onSubmitAnswer) => build.choices.map((item, index) => {
-    let id = "option-" + index;
-    let chars= item.substr(0, 10);
-    console.log(chars);
-    if (chars === "**Image** ") {
+    const id = "option-" + index;
+    const match = /\*\*(Image|INP)\*\* .*/g.exec(item);
+    console.log(match);
+    if (match && match[1] === "Image") {
         return <ImageAnswer build={build} index={index} image={item.substr(9)} onSubmitAnswer={onSubmitAnswer}/>
+    } else if (match && match[1] === "INP") {
+
     }
     return <Answer build={build} id={id} index={index} item={item} onSubmitAnswer={onSubmitAnswer}/>
 });

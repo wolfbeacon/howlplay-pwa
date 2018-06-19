@@ -18,7 +18,6 @@ const initialState = {
 
 
 function gameServerReducer(state = initialState, action){
-    console.log(action);
     switch (action.type) {
         case SET_GAME_SERVER:
             return {...state, link: action.payload.link,
