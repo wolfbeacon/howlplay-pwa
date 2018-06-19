@@ -1,6 +1,7 @@
 import Driver from "./driver/main";
-import {store} from "../index";
-import {push} from "react-router-redux";
+import { store } from "../index";
+import { push } from "react-router-redux";
+import { START_GAME, END_GAME } from '../redux/actions/gameServerActions';
 
 function getCode (buf) {
     let dataView = new Uint8Array(buf);
@@ -64,9 +65,13 @@ class SocketApi {
                     Driver.handlers.answersRejectedHandler();
                     this.lastAnswerSubmissionDone = true;
                     break;
+                case 12:
+                    console.log("START ZE GAME");
+                    store.dispatch({type: START_GAME});
+                    break;
                 case 13:
                     console.log("END OF ZE GAME");
-                    store.dispatch({type: "END_GAME"});
+                    store.dispatch({type: END_GAME});
                     break;
                 default:
                     break;

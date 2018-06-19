@@ -52,40 +52,54 @@ class GamePage extends Component {
         if (isCorrect) this.setState({score: this.state.score + 1})
     }
 
+    gameScreen() {
+        return <div id="question-box">
+            <Question build={this.props.quizData[this.props.currentQuestionIndex]}
+                onSubmitAnswer={this.onSubmitAnswer.bind(this)} />
+            <p id="question-left">
+                <span id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex} </span>
+                questions left
+            </p>
+            <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
+            <p>Using nickname: {this.props.nickname}</p>
+        </div>;
+    }
 
+    endScreen() {
+        return <div className="score-display" id="score-box">
+            <h1 className="score-end-header">That&#39;s it!</h1>
+            <p className="score-end-sub">Your final score is:</p>
+            <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
+            <EndList answers={this.state.answers} questions={this.props.quizData} />
+            {
+            this.props.end ?
+            <p className="score-end-hint">The game has ended. Thank you for playing using HowlPlay.</p> :
+            <p className="score-end-hint">Please do not close this page until the game ends.</p>
+            }
+        </div>
+    }
+
+    switch() {
+        if (!this.props.start) {
+            return <div id="lobby-box" className="score-display" style={{ padding: "40px" }}>
+                <h2 className="score-lobby-header">Welcome { this.props.nickname }</h2>
+                <p className="score-lobby-text">The game is about to begin...</p>
+            </div>;
+        } else if (this.props.quizData && this.props.socket) {
+            if (!this.state.finished && !this.props.end) {
+                return this.gameScreen();
+            } else {
+                return this.endScreen();
+            }
+        } else {
+            return <div className="score-display" style={{ padding: "40px" }}><p>Loading ...</p></div>;
+        }
+    }
 
     render() {
-        if (this.state.finished) {
-            console.log(this);
-        }
-        if (this.props.quizData && this.props.socket) {
-            return <section id="gamepage">
-                {!this.state.finished && !this.props.end ? <div id="question-box">
-                    <Question build={this.props.quizData[this.props.currentQuestionIndex]}
-                              onSubmitAnswer={this.onSubmitAnswer.bind(this)}/>
-                    <p id="question-left"><span
-                        id="question-left-count">{this.props.quizData.length - this.props.currentQuestionIndex}</span> questions
-                        left</p>
-                    <p>Connected to server: {(this.props.socket) ? this.props.gameServerLink : null}</p>
-                    <p>Using nickname: {this.props.nickname}</p>
-                </div> :
-                <div className="score-display" id="score-box">
-                    <h1 className="score-end-header">That&#39;s it!</h1>
-                    <p className="score-end-sub">Your final score is:</p>
-                    <span className="score-end-score">{this.state.score} / {this.props.quizData.length}</span>
-                    <EndList answers={this.state.answers} questions={this.props.quizData}/>
-                    {
-                        this.props.end ?
-                        <p className="score-end-hint">The game has ended. Thank you for playing using HowlPlay.</p>
-                        :
-                        <p className="score-end-hint">Please do not close this page until the game ends.</p>
-                    }
-                </div>
-                }
-            </section>
-        } else {
-            return <p>Loading ...</p>
-        }
+        return <section id="gamepage">
+            { this.switch() }
+        </section>
     }
 }
 
@@ -95,6 +109,7 @@ const mapStateToProps = state => ({
     quizData: state.gameServer.quizData,
     currentQuestionIndex: state.game.currentQuestionIndex,
     socket: state.socket,
+    start: state.gameServer.start,
     end: state.gameServer.end
 });
 
