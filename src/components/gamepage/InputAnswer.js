@@ -9,8 +9,27 @@ const submitAnswer = (build, input, queueAnswer, onSubmitAnswer) => {
     queueAnswer(input);
 };
 
-const InputAnswer = ({index, id, image, build, queueAnswer, onSubmitAnswer}) => <img className="image-answer" onClick={() => submitAnswer(build, index, queueAnswer, onSubmitAnswer)} id={id} key={index} src={image} alt=""/>;
+class InputAnswer extends React.Component {
+    constructor() {
+        super();
+        this.state = {input: ""}
+    }
+
+    inputChange(e) {
+        this.setState({input: e.target.value})
+    }
+
+    render() {
+        return (
+            <input className="image-answer"
+                   onClick={() => submitAnswer(this.props.build, this.props.index, this.props.queueAnswer, this.props.onSubmitAnswer)}
+                   id={this.props.id} key={this.props.index} value={this.state.input} onChange={this.inputChange.bind(this)} alt=""/>
+        )
+    }
+}
+
+const InputAnswer = ({index, id, image, build, queueAnswer, onSubmitAnswer}) => ;
 
 const mapDispatchToProps = dispatch => bindActionCreators({queueAnswer}, dispatch);
 
-export default connect(null, mapDispatchToProps) (ImageAnswer)
+export default connect(null, mapDispatchToProps) (InputAnswer)

@@ -1,6 +1,7 @@
 import React from 'react';
 import Answer from "./Answer";
 import ImageAnswer from "./ImageAnswer";
+import InputAnswer from "./InputAnswer";
 
 
 const listQuestions = (build, onSubmitAnswer) => build.choices.map((item, index) => {
@@ -10,7 +11,7 @@ const listQuestions = (build, onSubmitAnswer) => build.choices.map((item, index)
     if (match && match[1] === "Image") {
         return <ImageAnswer build={build} index={index} image={item.substr(9)} onSubmitAnswer={onSubmitAnswer}/>
     } else if (match && match[1] === "INP") {
-
+        return <InputAnswer build={build} index={index} onSubmitAnswer={onSubmitAnswer}/>
     }
     return <Answer build={build} id={id} index={index} item={item} onSubmitAnswer={onSubmitAnswer}/>
 });
