@@ -28,8 +28,6 @@ class InputAnswer extends React.Component {
     }
 }
 
-const InputAnswer = ({index, id, image, build, queueAnswer, onSubmitAnswer}) => ;
-
 const mapDispatchToProps = dispatch => bindActionCreators({queueAnswer}, dispatch);
 
 export default connect(null, mapDispatchToProps) (InputAnswer)

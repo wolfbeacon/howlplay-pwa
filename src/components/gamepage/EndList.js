@@ -69,7 +69,7 @@ const buildList = (answers, questions) => questions.map((item, key) => {
                 buildChoice(a, q)
             ) : type === 'IMG' ? (
                 buildImage(a, q)
-            ) : type === 'INP' ? buildChoice() : null}
+            ) : type === 'INP' ? buildInput(a, q) : null}
         </div>
     }
     return null;
