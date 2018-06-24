@@ -41,33 +41,47 @@ const buildChoice = (answer, question) => {
   </div>;
 };
 
-// Go through all the questions
-const buildList = (answers, questions) => questions.map((item, key) => {
-  let q = questions[key];
 
-  if (answers[key]) {
-    let a = answers[key].answer;
-    let type = answers[key].type;
-
-    return <div className="score-end-review-item" key={key}>
-      <h3 className="score-end-review-question">{item.title}</h3>
-      {type === 'OPTION' ? (
-        buildChoice(a, q)
-      ) : type === 'IMAGE' ? (
-        buildImage(a, q)
-      ) : null}
+const buildInput = (answer, question) => {
+    let correctAnswer = question.answer;
+    return (
+    <div className="score-end-review-choice">
+        <p className={answer === correctAnswer?
+                "score-end-review-option score-end-review-true":
+                "score-end-review-option score-end-review-false"}>{ question.choices[answer] }</p>
+        {
+            answer !== correctAnswer ? <p className="score-end-review-answer">The correct answer is "{ correctAnswer }"</p> : null
+        }
     </div>
-  }
-  return null;
+    );
+};
+
+const buildList = (answers, questions) => questions.map((item, key) => {
+    let q = questions[key];
+
+    if (answers[key]) {
+        let a = answers[key].answer;
+        let type = answers[key].type;
+
+        return <div className="score-end-review-item" key={key}>
+            <h3 className="score-end-review-question">{item.title}</h3>
+            {type === 'OPT' ? (
+                buildChoice(a, q)
+            ) : type === 'IMG' ? (
+                buildImage(a, q)
+            ) : type === 'INP' ? buildInput(a, q) : null}
+        </div>
+    }
+    return null;
 });
 
 const EndList = ({answers, questions}) => (answers.length !== 0 ?
-  <div className="score-end-review">
-    <h2 className="score-end-review-header">Overview</h2>
-    {buildList(answers, questions)}
-  </div>
-  :
-  null
+        <div className="score-end-review">
+            <h2 className="score-end-review-header">Overview</h2>
+            {buildList(answers, questions)}
+        </div>
+        :
+        null
 );
 
 export default EndList;
