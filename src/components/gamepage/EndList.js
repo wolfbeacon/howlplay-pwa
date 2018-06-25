@@ -75,13 +75,13 @@ const buildList = (answers, questions) => questions.map((item, key) => {
     return null;
 });
 
-const EndList = ({answers, questions}) => (answers.length !== 0 ?
-        <div className="score-end-review">
-            <h2 className="score-end-review-header">Overview</h2>
-            {buildList(answers, questions)}
-        </div>
-        :
-        null
+const EndList = ({answers, questions}) => (
+  <div className="score-end-review">
+    <h2 className="score-end-review-header">Overview</h2>
+    {
+      answers.length !== 0 ? buildList(answers, questions) : <p>We frown upon your lack of answers >:[</p>
+    }
+  </div>
 );
 
 export default EndList;

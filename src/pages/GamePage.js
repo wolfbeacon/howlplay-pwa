@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
 import {getQuizData} from "../redux/actions/gameServerActions";
 import {push} from "react-router-redux";
-import {setCurrentQuestionIndex} from "../redux/actions/gameActions";
+import {setCurrentQuestionIndex, toLogin} from "../redux/actions/gameActions";
 import {submitAnswers} from "../redux/actions/webSocketActions";
 
 class GamePage extends Component {
@@ -73,14 +73,17 @@ class GamePage extends Component {
             <EndList answers={this.state.answers} questions={this.props.quizData} />
             {
             this.props.end ?
-            <p className="score-end-hint">The game has ended. Thank you for playing using HowlPlay.</p> :
+            <div>
+                <p className="score-end-hint">The game has ended. Thank you for playing using HowlPlay.</p>
+                <button className="score-end-button" onClick={ this.props.toLogin }>Exit Game</button>
+            </div> :
             <p className="score-end-hint">Please do not close this page until the game ends.</p>
             }
         </div>
     }
 
     switch() {
-        if (!this.props.start) {
+        if (!this.props.start && !this.props.end) {
             return <div id="lobby-box" className="score-display" style={{ padding: "40px" }}>
                 <h2 className="score-lobby-header">Welcome { this.props.nickname }</h2>
                 <p className="score-lobby-text">The game is about to begin...</p>
@@ -113,6 +116,6 @@ const mapStateToProps = state => ({
     end: state.gameServer.end
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, submitAnswers, push}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, submitAnswers, push, toLogin}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage);

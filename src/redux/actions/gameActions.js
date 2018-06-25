@@ -1,3 +1,4 @@
+import { push } from 'react-router-redux';
 export const SET_CURRENT_QUESTION_INDEX = "SET_CURRENT_QUESTION_INDEX";
 
 /**
@@ -9,5 +10,11 @@ export function setCurrentQuestionIndex(index){
     return {
         type: SET_CURRENT_QUESTION_INDEX,
         payload: { index }
+    }
+}
+
+export function toLogin() {
+    return dispatch => {
+        dispatch(push("/"));
     }
 }
