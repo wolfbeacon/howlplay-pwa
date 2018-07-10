@@ -1,2 +1,4 @@
-export const DEFAULT_QUIZ_LINK = "http://demo.howlplay.com:8080/pwa/game/";
-export const DEFAULT_QUIZ_QUES_LINK = "http://demo.howlplay.com:8080/quiz/"
+// a little bit of webpack magic to ensure that prod builds are always pointing to correct main server
+export const DEFAULT_API_URL = process.env.BASE_URL || "http://localhost:8080";
+
+console.log(DEFAULT_API_URL);

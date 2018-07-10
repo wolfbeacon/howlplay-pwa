@@ -7,10 +7,14 @@ import createHistory from 'history/createBrowserHistory';
 import {Route, Switch} from 'react-router';
 import {ConnectedRouter, routerReducer, routerMiddleware} from 'react-router-redux';
 import thunk from 'redux-thunk';
+import axios from 'axios';
 
 import Login from "./pages/Login";
 import GamePage from './pages/GamePage';
 import NotFound from "./pages/404"
+
+
+import {DEFAULT_API_URL} from "./configurations";
 
 import "normalize.css"
 import './css/main.scss';
@@ -20,6 +24,9 @@ import './lib/socket';
 import gameServerReducer from './redux/reducers/gameServerReducer';
 import webSocketReducer from "./redux/reducers/webSocketReducer";
 import gameReducer from "./redux/reducers/gameReducer";
+
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = DEFAULT_API_URL;
 
 const history = createHistory();
 

@@ -4,14 +4,14 @@ export const SEND_NICKNAME = "SEND_NICKNAME";
 export const QUEUE_ANSWER = "QUEUE_ANSWER";
 export const SUBMIT_ANSWERS = "SUBMIT_ANSWERS";
 
-export const initializeSocket = (url, config) => (dispatch) => {
-    dispatch({
+export const initializeSocket = (url, config) => {
+    return {
         type: SOCKET_CONNECTED,
         payload: {
             url, config
         }
-    })
-}
+    }
+};
 
 export function queueAnswer(answer){
     return {

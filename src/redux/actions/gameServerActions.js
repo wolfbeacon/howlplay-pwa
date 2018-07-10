@@ -1,13 +1,11 @@
-import {push} from 'react-router-redux';
-import axios from "axios/index";
+import axios from "axios";
 import {initializeSocket} from "./webSocketActions";
-import {joinGame} from '../../node_api.js';
-import {DEFAULT_QUIZ_QUES_LINK} from "../../configurations";
+import {push} from "react-router-redux";
 
-const QUIZ_QUES_LINK = DEFAULT_QUIZ_QUES_LINK;
 
 let GAME_SERVER = "null";
 let QUIZ_ID = null;
+
 export const SET_GAME_SERVER = 'SET_GAME_SERVER';
 export const GAME_SERVER_INPUT_ERROR = "GAME_SERVER_INPUT_ERROR";
 export const SET_QUIZ_DATA = "SET_QUIZ_DATA";
@@ -35,41 +33,21 @@ function _checkAllInput(code, nickname) {
  * Also update redux store
  */
 export function checkAndSwitchToGamePage({code, nickname}) {
-    return (dispatch) => {
-        let error =_checkAllInput(code, nickname);
+    return async (dispatch) => {
+        let error = _checkAllInput(code, nickname);
         if (error) {
             dispatch({type: GAME_SERVER_INPUT_ERROR, ...error});
         } else {
-          joinGame(code, function(err, res) {
-            if (err) {
-              dispatch({type: GAME_SERVER_INPUT_ERROR, input: "SERVER", error: "There appears to be no gameserver for this code."});
-              return;
-            }
-            console.log(res);
-            GAME_SERVER = res.url;
-            // GAME_SERVER = "ws://localhost:9090";
-            QUIZ_ID = res.id;
-            dispatch({
-                type: SET_GAME_SERVER,
-                payload: {nickname, link: res.url}
+            let res = await axios.get('/quiz', {
+                params: {
+                    code: code
+                }
             });
-            dispatch({type: GAME_SERVER_INPUT_ERROR, input: "SERVER", error: "You've been disconnected!"});
-            dispatch(push('/game'));
-          });
+
+            if (!res.error) {
+                dispatch(initializeSocket(res.data.url, {nickname: nickname}));
+                dispatch(push('/game'));
+            }
         }
     }
-
-}
-
-export function getQuizData(config) {
-  return dispatch => {
-      axios.get(QUIZ_QUES_LINK + QUIZ_ID).then((data) => {
-          console.log(data);
-          dispatch ({
-              type: SET_QUIZ_DATA,
-              payload: data.data
-          });
-          dispatch(initializeSocket(GAME_SERVER, config));
-      });
-  }
 }

@@ -3,10 +3,9 @@ import Question from '../components/gamepage/Question';
 import EndList from '../components/gamepage/EndList';
 import {connect} from 'react-redux';
 import {bindActionCreators} from "redux";
-import {getQuizData} from "../redux/actions/gameServerActions";
 import {push} from "react-router-redux";
 import {setCurrentQuestionIndex} from "../redux/actions/gameActions";
-import {submitAnswers} from "../redux/actions/webSocketActions";
+import {initializeSocket, submitAnswers} from "../redux/actions/webSocketActions";
 
 class GamePage extends Component {
 
@@ -23,9 +22,6 @@ class GamePage extends Component {
     }
 
     componentDidMount() {
-        this.props.getQuizData({
-            nickname: this.props.nickname
-        });
         if (!this.props.gameServerLink) {
             this.props.push('/');
         }
@@ -113,6 +109,6 @@ const mapStateToProps = state => ({
     end: state.gameServer.end
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({getQuizData, setCurrentQuestionIndex, submitAnswers, push}, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({initializeSocket, setCurrentQuestionIndex, submitAnswers, push}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GamePage);
